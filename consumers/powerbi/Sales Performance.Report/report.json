@@ -83,6 +83,57 @@
       ],
       "filters": "[]",
       "config": "{}"
+    },
+    {
+      "name": "SalesAnalysis",
+      "displayName": "Sales Analysis",
+      "displayOption": 1,
+      "width": 1280,
+      "height": 720,
+      "visualContainers": [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "width": 590,
+          "height": 320,
+          "config": "{\"name\":\"sales_by_territory\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":0,\"width\":590,\"height\":320}}],\"singleVisual\":{\"visualType\":\"clusteredBarChart\",\"projections\":{\"Y\":[{\"queryRef\":\"Sale.Total Sales Excl Tax\"}],\"Category\":[{\"queryRef\":\"City.Sales Territory\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"Sale\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"City\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Total Sales Excl Tax\"},\"Name\":\"Sale.Total Sales Excl Tax\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Sales Territory\"},\"Name\":\"City.Sales Territory\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Total Sales Excl Tax\"}}},{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Sales Territory\"}}}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "query": "{\"Commands\":[{\"SemanticQueryDataShapeCommand\":{\"Query\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"Sale\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"City\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Total Sales Excl Tax\"},\"Name\":\"Sale.Total Sales Excl Tax\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Sales Territory\"},\"Name\":\"City.Sales Territory\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Total Sales Excl Tax\"}}},{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Sales Territory\"}}}]},\"Binding\":{\"Primary\":{\"Groupings\":[{\"Projections\":[1,0]}]},\"Version\":1},\"ExecutionMetricsKind\":1}}]}"
+        },
+        {
+          "x": 620,
+          "y": 0,
+          "z": 0,
+          "width": 590,
+          "height": 320,
+          "config": "{\"name\":\"sales_by_month\",\"layouts\":[{\"id\":0,\"position\":{\"x\":620,\"y\":0,\"z\":0,\"width\":590,\"height\":320}}],\"singleVisual\":{\"visualType\":\"lineChart\",\"projections\":{\"Y\":[{\"queryRef\":\"Sale.Total Sales Excl Tax\"}],\"Category\":[{\"queryRef\":\"Date.Beginning of Month\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"Sale\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"Date\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Total Sales Excl Tax\"},\"Name\":\"Sale.Total Sales Excl Tax\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Beginning of Month\"},\"Name\":\"Date.Beginning of Month\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Beginning of Month\"}}}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "query": "{\"Commands\":[{\"SemanticQueryDataShapeCommand\":{\"Query\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"Sale\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"Date\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Total Sales Excl Tax\"},\"Name\":\"Sale.Total Sales Excl Tax\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Beginning of Month\"},\"Name\":\"Date.Beginning of Month\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Beginning of Month\"}}}]},\"Binding\":{\"Primary\":{\"Groupings\":[{\"Projections\":[1,0]}]},\"Version\":1},\"ExecutionMetricsKind\":1}}]}"
+        },
+        {
+          "x": 0,
+          "y": 350,
+          "z": 0,
+          "width": 590,
+          "height": 320,
+          "config": "{\"name\":\"top_stock_items\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":350,\"z\":0,\"width\":590,\"height\":320}}],\"singleVisual\":{\"visualType\":\"clusteredBarChart\",\"projections\":{\"Y\":[{\"queryRef\":\"Sale.Top Stock Item Sales\"}],\"Category\":[{\"queryRef\":\"Stock Item.Stock Item Key\"}],\"Tooltips\":[{\"queryRef\":\"Stock Item.Stock Item\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"Sale\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"Stock Item\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Top Stock Item Sales\"},\"Name\":\"Sale.Top Stock Item Sales\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Stock Item Key\"},\"Name\":\"Stock Item.Stock Item Key\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Stock Item\"},\"Name\":\"Stock Item.Stock Item\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Top Stock Item Sales\"}}},{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Stock Item Key\"}}}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "query": "{\"Commands\":[{\"SemanticQueryDataShapeCommand\":{\"Query\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"Sale\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"Stock Item\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Top Stock Item Sales\"},\"Name\":\"Sale.Top Stock Item Sales\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Stock Item Key\"},\"Name\":\"Stock Item.Stock Item Key\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Stock Item\"},\"Name\":\"Stock Item.Stock Item\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Top Stock Item Sales\"}}},{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Stock Item Key\"}}}]},\"Binding\":{\"Primary\":{\"Groupings\":[{\"Projections\":[1,2,0]}]},\"Version\":1},\"ExecutionMetricsKind\":1}}]}"
+        },
+        {
+          "x": 620,
+          "y": 350,
+          "z": 0,
+          "width": 590,
+          "height": 320,
+          "config": "{\"name\":\"sales_by_buying_group\",\"layouts\":[{\"id\":0,\"position\":{\"x\":620,\"y\":350,\"z\":0,\"width\":590,\"height\":320}}],\"singleVisual\":{\"visualType\":\"clusteredBarChart\",\"projections\":{\"Y\":[{\"queryRef\":\"Sale.Total Sales Excl Tax\"}],\"Category\":[{\"queryRef\":\"Customer.Buying Group\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"Sale\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"Customer\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Total Sales Excl Tax\"},\"Name\":\"Sale.Total Sales Excl Tax\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Buying Group\"},\"Name\":\"Customer.Buying Group\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Total Sales Excl Tax\"}}},{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Buying Group\"}}}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "query": "{\"Commands\":[{\"SemanticQueryDataShapeCommand\":{\"Query\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"Sale\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"Customer\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Total Sales Excl Tax\"},\"Name\":\"Sale.Total Sales Excl Tax\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Buying Group\"},\"Name\":\"Customer.Buying Group\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Total Sales Excl Tax\"}}},{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Buying Group\"}}}]},\"Binding\":{\"Primary\":{\"Groupings\":[{\"Projections\":[1,0]}]},\"Version\":1},\"ExecutionMetricsKind\":1}}]}"
+        }
+      ],
+      "filters": "[]",
+      "config": "{}"
     }
   ]
 }

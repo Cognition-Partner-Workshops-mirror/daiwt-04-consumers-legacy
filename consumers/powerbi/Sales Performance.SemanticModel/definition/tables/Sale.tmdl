@@ -21,6 +21,13 @@ table 'Sale'
 	measure 'Chiller Sales' = CALCULATE([Total Sales Excl Tax], 'Sale'[Total Chiller Items] > 0)
 		formatString: #,0.00
 
+	measure 'Top Stock Item Sales' = VAR TopItems = TOPN(10, ALL('Stock Item'), [Total Sales Excl Tax], DESC, 'Stock Item'[Stock Item Key], ASC) RETURN CALCULATE([Total Sales Excl Tax], KEEPFILTERS(TopItems))
+		formatString: #,0.00
+
+	column 'Sales Band' = IF('Sale'[Total Excluding Tax] >= 1000, "High Value", "Standard")
+		dataType: string
+		summarizeBy: none
+
 	column 'Sale Key'
 		dataType: int64
 		summarizeBy: none

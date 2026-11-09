@@ -18,6 +18,23 @@ def test_tableau_workbooks():
         assert workbook.datasources
         tree = ElementTree.parse(path)
         assert tree.find('.//relation').attrib['type'] == 'text'
+        worksheets = tree.findall('.//worksheet')
+        assert len(worksheets) == 3
+        assert {zone.attrib['name'] for zone in tree.findall('.//dashboard/zones/zone')} == {sheet.attrib['name'] for sheet in worksheets}
+        calculations = tree.findall("./datasources/datasource[@name='Reporting']/column/calculation")
+        assert len(calculations) >= 3
+        formulas = ' '.join(calc.attrib['formula'] for calc in calculations)
+        assert 'ZN(' in formulas and 'IIF(' in formulas and '{FIXED' in formulas
+        assert tree.find("./datasources/datasource[@name='Parameters']") is not None
+        for relation in tree.findall('.//relation'):
+            sql = relation.text
+            if 'TOP (' in sql:
+                assert 'ORDER BY' in sql
+        if path.stem == 'Regional Sales':
+            assert len(tree.findall('.//relation')) >= 2
+        if path.stem == 'Retail Channels':
+            sql = tree.find('.//relation').text
+            assert 'DATE_TRUNC(' in sql and 'NVL(' in sql and '::date' in sql
         for element in tree.findall('.//worksheet') + tree.findall('.//dashboard'):
             assert any(e['source_file'] == str(path.relative_to(ROOT)) and e.get('name') == element.attrib['name'] for e in SPEC)
 
@@ -38,11 +55,23 @@ def test_powerbi_measures_and_cards():
                 assert any(e['kind'] == 'measure' and e.get('name') == name and e['source_file'] == str(table.relative_to(ROOT)) for e in SPEC)
         report_path = Path(str(base) + '.Report/report.json')
         report = json.loads(report_path.read_text())
-        for visual in report['sections'][0]['visualContainers']:
+        visuals = [visual for section in report['sections'] for visual in section['visualContainers']]
+        assert len(visuals) == (11 if project.stem == 'Sales Performance' else 5)
+        for visual in visuals:
             config = json.loads(visual['config'])
             name = config['singleVisual']['prototypeQuery']['Select'][0]['Measure']['Property']
             assert name in measure_names
             assert any(e.get('visual_id') == config['name'] and e['source_file'] == str(report_path.relative_to(ROOT)) for e in SPEC)
+
+
+def test_model_expansion():
+    model = ROOT / 'consumers/powerbi'
+    sale = (model / 'Sales Performance.SemanticModel/definition/tables/Sale.tmdl').read_text()
+    assert "column 'Sales Band' = IF(" in sale
+    holding = (model / 'Order Fulfilment.SemanticModel/definition/tables/Stock Holding.tmdl').read_text()
+    assert "partition 'Stock Holding' = m" in holding
+    assert 'FROM Fact.[Stock Holding]' in holding
+    assert len(re.findall(r"\tmeasure '([^']+)' =", holding)) == 2
 
 
 def test_spec_integrity():

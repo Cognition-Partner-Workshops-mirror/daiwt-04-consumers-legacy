@@ -40,3 +40,8 @@ def territory(year: int = Query(2016, ge=1900, le=9998)):
 @app.get('/stock-items/top')
 def top_items(limit: int = Query(10, ge=1, le=100)):
     return execute(queries.TOP_ITEMS, (limit,))
+
+
+@app.get('/customers/{customer_key}/orders')
+def customer_orders(customer_key: int = Path(ge=1), limit: int = Query(20, ge=1, le=100)):
+    return execute(queries.CUSTOMER_ORDERS, (limit, customer_key))

@@ -312,128 +312,6 @@
       "visual_id": "card2"
     },
     {
-      "id": "tableau_regional_sales",
-      "consumer": "tableau",
-      "source_file": "consumers/tableau/Regional Sales.twb",
-      "kind": "tile",
-      "source": "mssql",
-      "sql": "SELECT TOP (100) c.[Sales Territory] AS territory, DATEPART(year,s.[Invoice Date Key]) AS sales_year, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory], DATEPART(year,s.[Invoice Date Key])",
-      "grain": "one row per territory, sales_year",
-      "keys": [
-        "territory",
-        "sales_year"
-      ],
-      "numeric_tolerance": {
-        "absolute": 0.01,
-        "relative": 0.000001
-      },
-      "name": "Regional Sales",
-      "parameters": {
-        "Target Value": 100000
-      }
-    },
-    {
-      "id": "tableau_regional_sales_overview",
-      "consumer": "tableau",
-      "source_file": "consumers/tableau/Regional Sales.twb",
-      "kind": "tile",
-      "source": "mssql",
-      "sql": "SELECT TOP (100) c.[Sales Territory] AS territory, DATEPART(year,s.[Invoice Date Key]) AS sales_year, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory], DATEPART(year,s.[Invoice Date Key])",
-      "grain": "one row per territory, sales_year",
-      "keys": [
-        "territory",
-        "sales_year"
-      ],
-      "numeric_tolerance": {
-        "absolute": 0.01,
-        "relative": 0.000001
-      },
-      "name": "Regional Sales Overview",
-      "parameters": {
-        "Target Value": 100000
-      }
-    },
-    {
-      "id": "tableau_order_pipeline",
-      "consumer": "tableau",
-      "source_file": "consumers/tableau/Order Pipeline.twb",
-      "kind": "tile",
-      "source": "mssql",
-      "sql": "SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, ISNULL(SUM([Total Excluding Tax]),0) AS order_value, COUNT_BIG(*) AS order_lines FROM Fact.[Order] GROUP BY CONVERT(char(7),[Order Date Key],120)",
-      "grain": "one row per order_month",
-      "keys": [
-        "order_month"
-      ],
-      "numeric_tolerance": {
-        "absolute": 0.01,
-        "relative": 0.000001
-      },
-      "name": "Order Pipeline",
-      "parameters": {
-        "Target Value": 100000
-      }
-    },
-    {
-      "id": "tableau_order_pipeline_overview",
-      "consumer": "tableau",
-      "source_file": "consumers/tableau/Order Pipeline.twb",
-      "kind": "tile",
-      "source": "mssql",
-      "sql": "SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, ISNULL(SUM([Total Excluding Tax]),0) AS order_value, COUNT_BIG(*) AS order_lines FROM Fact.[Order] GROUP BY CONVERT(char(7),[Order Date Key],120)",
-      "grain": "one row per order_month",
-      "keys": [
-        "order_month"
-      ],
-      "numeric_tolerance": {
-        "absolute": 0.01,
-        "relative": 0.000001
-      },
-      "name": "Order Pipeline Overview",
-      "parameters": {
-        "Target Value": 100000
-      }
-    },
-    {
-      "id": "tableau_retail_channels",
-      "consumer": "tableau",
-      "source_file": "consumers/tableau/Retail Channels.twb",
-      "kind": "tile",
-      "source": "redshift",
-      "sql": "SELECT sales_channel, COUNT(*) AS order_count FROM core.orders GROUP BY sales_channel",
-      "grain": "one row per sales_channel",
-      "keys": [
-        "sales_channel"
-      ],
-      "numeric_tolerance": {
-        "absolute": 0.01,
-        "relative": 0.000001
-      },
-      "name": "Retail Channels",
-      "parameters": {
-        "Target Value": 100000
-      }
-    },
-    {
-      "id": "tableau_retail_channels_overview",
-      "consumer": "tableau",
-      "source_file": "consumers/tableau/Retail Channels.twb",
-      "kind": "tile",
-      "source": "redshift",
-      "sql": "SELECT sales_channel, COUNT(*) AS order_count FROM core.orders GROUP BY sales_channel",
-      "grain": "one row per sales_channel",
-      "keys": [
-        "sales_channel"
-      ],
-      "numeric_tolerance": {
-        "absolute": 0.01,
-        "relative": 0.000001
-      },
-      "name": "Retail Channels Overview",
-      "parameters": {
-        "Target Value": 100000
-      }
-    },
-    {
       "id": "api_customer_summary",
       "consumer": "api",
       "source_file": "consumers/api/main.py",
@@ -580,13 +458,94 @@
       }
     },
     {
-      "id": "tableau_regional_sales_target",
+      "id": "tableau_regional_sales",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Regional Sales.twb",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT [territory] AS [territory], SUM([sales]) AS value FROM (SELECT TOP (100) c.[Sales Territory] AS territory, DATEPART(year,s.[Invoice Date Key]) AS sales_year, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory], DATEPART(year,s.[Invoice Date Key]) ORDER BY sales DESC, territory, sales_year) report_rows GROUP BY [territory]",
+      "grain": "one worksheet mark per territory",
+      "keys": [
+        "territory"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Regional Sales",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_leading_customers",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Regional Sales.twb",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT [customer] AS [customer], SUM([sales]) AS value FROM (SELECT TOP (20) c.[Customer Key] AS customer_key, c.[Customer] AS customer, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.Customer c ON s.[Customer Key]=c.[Customer Key] GROUP BY c.[Customer Key],c.[Customer] ORDER BY sales DESC, customer_key) report_rows GROUP BY [customer]",
+      "grain": "one worksheet mark per customer",
+      "keys": [
+        "customer"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Leading Customers",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_regional_targets",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Regional Sales.twb",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT [territory] AS [territory], SUM([sales])/100000.0 AS value FROM (SELECT TOP (100) c.[Sales Territory] AS territory, DATEPART(year,s.[Invoice Date Key]) AS sales_year, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory], DATEPART(year,s.[Invoice Date Key]) ORDER BY sales DESC, territory, sales_year) report_rows GROUP BY [territory]",
+      "grain": "one worksheet mark per territory",
+      "keys": [
+        "territory"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Regional Targets",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_regional_sales_overview",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Regional Sales.twb",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT 'Regional Sales' AS tile_name, CONVERT(nvarchar(100),[territory]) AS label, value FROM (SELECT [territory] AS [territory], SUM([sales]) AS value FROM (SELECT TOP (100) c.[Sales Territory] AS territory, DATEPART(year,s.[Invoice Date Key]) AS sales_year, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory], DATEPART(year,s.[Invoice Date Key]) ORDER BY sales DESC, territory, sales_year) report_rows GROUP BY [territory]) marks UNION ALL SELECT 'Leading Customers' AS tile_name, CONVERT(nvarchar(100),[customer]) AS label, value FROM (SELECT [customer] AS [customer], SUM([sales]) AS value FROM (SELECT TOP (20) c.[Customer Key] AS customer_key, c.[Customer] AS customer, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.Customer c ON s.[Customer Key]=c.[Customer Key] GROUP BY c.[Customer Key],c.[Customer] ORDER BY sales DESC, customer_key) report_rows GROUP BY [customer]) marks UNION ALL SELECT 'Regional Targets' AS tile_name, CONVERT(nvarchar(100),[territory]) AS label, value FROM (SELECT [territory] AS [territory], SUM([sales])/100000.0 AS value FROM (SELECT TOP (100) c.[Sales Territory] AS territory, DATEPART(year,s.[Invoice Date Key]) AS sales_year, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory], DATEPART(year,s.[Invoice Date Key]) ORDER BY sales DESC, territory, sales_year) report_rows GROUP BY [territory]) marks",
+      "grain": "one row per dashboard worksheet mark",
+      "keys": [
+        "tile_name",
+        "label"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Regional Sales Overview",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_regional_sales_value_vs_target",
       "consumer": "tableau",
       "source_file": "consumers/tableau/Regional Sales.twb",
       "kind": "measure",
       "source": "mssql",
-      "sql": "SELECT c.[Sales Territory] AS territory, SUM(s.[Total Excluding Tax])/100000.0 AS value_vs_target FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory]",
-      "grain": "worksheet mark by territory",
+      "sql": "SELECT [territory] AS [territory], SUM([sales])/100000.0 AS value FROM (SELECT TOP (100) c.[Sales Territory] AS territory, DATEPART(year,s.[Invoice Date Key]) AS sales_year, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory], DATEPART(year,s.[Invoice Date Key]) ORDER BY sales DESC, territory, sales_year) report_rows CROSS JOIN (SELECT SUM([sales]) AS total_value FROM (SELECT TOP (100) c.[Sales Territory] AS territory, DATEPART(year,s.[Invoice Date Key]) AS sales_year, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory], DATEPART(year,s.[Invoice Date Key]) ORDER BY sales DESC, territory, sales_year) total_rows) t GROUP BY [territory]",
+      "grain": "worksheet calculation by territory; Target Value=100000",
       "keys": [
         "territory"
       ],
@@ -600,13 +559,134 @@
       }
     },
     {
-      "id": "tableau_order_pipeline_target",
+      "id": "tableau_regional_sales_above_target",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Regional Sales.twb",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT [territory] AS [territory], CASE WHEN SUM([sales])>=100000 THEN 1 ELSE 0 END AS value FROM (SELECT TOP (100) c.[Sales Territory] AS territory, DATEPART(year,s.[Invoice Date Key]) AS sales_year, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory], DATEPART(year,s.[Invoice Date Key]) ORDER BY sales DESC, territory, sales_year) report_rows CROSS JOIN (SELECT SUM([sales]) AS total_value FROM (SELECT TOP (100) c.[Sales Territory] AS territory, DATEPART(year,s.[Invoice Date Key]) AS sales_year, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory], DATEPART(year,s.[Invoice Date Key]) ORDER BY sales DESC, territory, sales_year) total_rows) t GROUP BY [territory]",
+      "grain": "worksheet calculation by territory; Target Value=100000",
+      "keys": [
+        "territory"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Above Target",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_regional_sales_share_of_total",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Regional Sales.twb",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT [territory] AS [territory], SUM([sales])*1.0/NULLIF(MAX(t.total_value),0) AS value FROM (SELECT TOP (100) c.[Sales Territory] AS territory, DATEPART(year,s.[Invoice Date Key]) AS sales_year, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory], DATEPART(year,s.[Invoice Date Key]) ORDER BY sales DESC, territory, sales_year) report_rows CROSS JOIN (SELECT SUM([sales]) AS total_value FROM (SELECT TOP (100) c.[Sales Territory] AS territory, DATEPART(year,s.[Invoice Date Key]) AS sales_year, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory], DATEPART(year,s.[Invoice Date Key]) ORDER BY sales DESC, territory, sales_year) total_rows) t GROUP BY [territory]",
+      "grain": "worksheet calculation by territory; Target Value=100000",
+      "keys": [
+        "territory"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Share of Total",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_order_pipeline",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Order Pipeline.twb",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT [order_month] AS [order_month], SUM([order_value]) AS value FROM (SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, ISNULL(SUM([Total Excluding Tax]),0) AS order_value, COUNT_BIG(*) AS order_lines, SUM(CASE WHEN [Picked Date Key] IS NULL THEN 1 ELSE 0 END) AS unpicked_lines FROM Fact.[Order] WHERE [Order Date Key] >= DATEFROMPARTS(2013,1,1) GROUP BY CONVERT(char(7),[Order Date Key],120)) report_rows GROUP BY [order_month]",
+      "grain": "one worksheet mark per order_month",
+      "keys": [
+        "order_month"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Order Pipeline",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_unpicked_pipeline",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Order Pipeline.twb",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT [order_month] AS [order_month], SUM([unpicked_lines]) AS value FROM (SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, ISNULL(SUM([Total Excluding Tax]),0) AS order_value, COUNT_BIG(*) AS order_lines, SUM(CASE WHEN [Picked Date Key] IS NULL THEN 1 ELSE 0 END) AS unpicked_lines FROM Fact.[Order] WHERE [Order Date Key] >= DATEFROMPARTS(2013,1,1) GROUP BY CONVERT(char(7),[Order Date Key],120)) report_rows GROUP BY [order_month]",
+      "grain": "one worksheet mark per order_month",
+      "keys": [
+        "order_month"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Unpicked Pipeline",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_order_target_coverage",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Order Pipeline.twb",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT [order_month] AS [order_month], SUM([order_value])/100000.0 AS value FROM (SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, ISNULL(SUM([Total Excluding Tax]),0) AS order_value, COUNT_BIG(*) AS order_lines, SUM(CASE WHEN [Picked Date Key] IS NULL THEN 1 ELSE 0 END) AS unpicked_lines FROM Fact.[Order] WHERE [Order Date Key] >= DATEFROMPARTS(2013,1,1) GROUP BY CONVERT(char(7),[Order Date Key],120)) report_rows GROUP BY [order_month]",
+      "grain": "one worksheet mark per order_month",
+      "keys": [
+        "order_month"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Order Target Coverage",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_order_pipeline_overview",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Order Pipeline.twb",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT 'Order Pipeline' AS tile_name, CONVERT(nvarchar(100),[order_month]) AS label, value FROM (SELECT [order_month] AS [order_month], SUM([order_value]) AS value FROM (SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, ISNULL(SUM([Total Excluding Tax]),0) AS order_value, COUNT_BIG(*) AS order_lines, SUM(CASE WHEN [Picked Date Key] IS NULL THEN 1 ELSE 0 END) AS unpicked_lines FROM Fact.[Order] WHERE [Order Date Key] >= DATEFROMPARTS(2013,1,1) GROUP BY CONVERT(char(7),[Order Date Key],120)) report_rows GROUP BY [order_month]) marks UNION ALL SELECT 'Unpicked Pipeline' AS tile_name, CONVERT(nvarchar(100),[order_month]) AS label, value FROM (SELECT [order_month] AS [order_month], SUM([unpicked_lines]) AS value FROM (SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, ISNULL(SUM([Total Excluding Tax]),0) AS order_value, COUNT_BIG(*) AS order_lines, SUM(CASE WHEN [Picked Date Key] IS NULL THEN 1 ELSE 0 END) AS unpicked_lines FROM Fact.[Order] WHERE [Order Date Key] >= DATEFROMPARTS(2013,1,1) GROUP BY CONVERT(char(7),[Order Date Key],120)) report_rows GROUP BY [order_month]) marks UNION ALL SELECT 'Order Target Coverage' AS tile_name, CONVERT(nvarchar(100),[order_month]) AS label, value FROM (SELECT [order_month] AS [order_month], SUM([order_value])/100000.0 AS value FROM (SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, ISNULL(SUM([Total Excluding Tax]),0) AS order_value, COUNT_BIG(*) AS order_lines, SUM(CASE WHEN [Picked Date Key] IS NULL THEN 1 ELSE 0 END) AS unpicked_lines FROM Fact.[Order] WHERE [Order Date Key] >= DATEFROMPARTS(2013,1,1) GROUP BY CONVERT(char(7),[Order Date Key],120)) report_rows GROUP BY [order_month]) marks",
+      "grain": "one row per dashboard worksheet mark",
+      "keys": [
+        "tile_name",
+        "label"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Order Pipeline Overview",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_order_pipeline_value_vs_target",
       "consumer": "tableau",
       "source_file": "consumers/tableau/Order Pipeline.twb",
       "kind": "measure",
       "source": "mssql",
-      "sql": "SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, SUM([Total Excluding Tax])/100000.0 AS value_vs_target FROM Fact.[Order] GROUP BY CONVERT(char(7),[Order Date Key],120)",
-      "grain": "worksheet mark by order_month",
+      "sql": "SELECT [order_month] AS [order_month], SUM([order_value])/100000.0 AS value FROM (SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, ISNULL(SUM([Total Excluding Tax]),0) AS order_value, COUNT_BIG(*) AS order_lines, SUM(CASE WHEN [Picked Date Key] IS NULL THEN 1 ELSE 0 END) AS unpicked_lines FROM Fact.[Order] WHERE [Order Date Key] >= DATEFROMPARTS(2013,1,1) GROUP BY CONVERT(char(7),[Order Date Key],120)) report_rows CROSS JOIN (SELECT SUM([order_value]) AS total_value FROM (SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, ISNULL(SUM([Total Excluding Tax]),0) AS order_value, COUNT_BIG(*) AS order_lines, SUM(CASE WHEN [Picked Date Key] IS NULL THEN 1 ELSE 0 END) AS unpicked_lines FROM Fact.[Order] WHERE [Order Date Key] >= DATEFROMPARTS(2013,1,1) GROUP BY CONVERT(char(7),[Order Date Key],120)) total_rows) t GROUP BY [order_month]",
+      "grain": "worksheet calculation by order_month; Target Value=100000",
       "keys": [
         "order_month"
       ],
@@ -620,13 +700,134 @@
       }
     },
     {
-      "id": "tableau_retail_channels_target",
+      "id": "tableau_order_pipeline_above_target",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Order Pipeline.twb",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT [order_month] AS [order_month], CASE WHEN SUM([order_value])>=100000 THEN 1 ELSE 0 END AS value FROM (SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, ISNULL(SUM([Total Excluding Tax]),0) AS order_value, COUNT_BIG(*) AS order_lines, SUM(CASE WHEN [Picked Date Key] IS NULL THEN 1 ELSE 0 END) AS unpicked_lines FROM Fact.[Order] WHERE [Order Date Key] >= DATEFROMPARTS(2013,1,1) GROUP BY CONVERT(char(7),[Order Date Key],120)) report_rows CROSS JOIN (SELECT SUM([order_value]) AS total_value FROM (SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, ISNULL(SUM([Total Excluding Tax]),0) AS order_value, COUNT_BIG(*) AS order_lines, SUM(CASE WHEN [Picked Date Key] IS NULL THEN 1 ELSE 0 END) AS unpicked_lines FROM Fact.[Order] WHERE [Order Date Key] >= DATEFROMPARTS(2013,1,1) GROUP BY CONVERT(char(7),[Order Date Key],120)) total_rows) t GROUP BY [order_month]",
+      "grain": "worksheet calculation by order_month; Target Value=100000",
+      "keys": [
+        "order_month"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Above Target",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_order_pipeline_share_of_total",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Order Pipeline.twb",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT [order_month] AS [order_month], SUM([order_value])*1.0/NULLIF(MAX(t.total_value),0) AS value FROM (SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, ISNULL(SUM([Total Excluding Tax]),0) AS order_value, COUNT_BIG(*) AS order_lines, SUM(CASE WHEN [Picked Date Key] IS NULL THEN 1 ELSE 0 END) AS unpicked_lines FROM Fact.[Order] WHERE [Order Date Key] >= DATEFROMPARTS(2013,1,1) GROUP BY CONVERT(char(7),[Order Date Key],120)) report_rows CROSS JOIN (SELECT SUM([order_value]) AS total_value FROM (SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, ISNULL(SUM([Total Excluding Tax]),0) AS order_value, COUNT_BIG(*) AS order_lines, SUM(CASE WHEN [Picked Date Key] IS NULL THEN 1 ELSE 0 END) AS unpicked_lines FROM Fact.[Order] WHERE [Order Date Key] >= DATEFROMPARTS(2013,1,1) GROUP BY CONVERT(char(7),[Order Date Key],120)) total_rows) t GROUP BY [order_month]",
+      "grain": "worksheet calculation by order_month; Target Value=100000",
+      "keys": [
+        "order_month"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Share of Total",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_retail_channels",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Retail Channels.twb",
+      "kind": "tile",
+      "source": "redshift",
+      "sql": "SELECT \"sales_channel\" AS \"sales_channel\", SUM(\"order_count\") AS value FROM (SELECT sales_channel, DATE_TRUNC('month',order_ts)::date AS order_month, NVL(COUNT(*),0) AS order_count FROM core.orders GROUP BY sales_channel, DATE_TRUNC('month',order_ts)::date) report_rows GROUP BY \"sales_channel\"",
+      "grain": "one worksheet mark per sales_channel",
+      "keys": [
+        "sales_channel"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Retail Channels",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_retail_monthly_trend",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Retail Channels.twb",
+      "kind": "tile",
+      "source": "redshift",
+      "sql": "SELECT \"order_month\" AS \"order_month\", SUM(\"order_count\") AS value FROM (SELECT sales_channel, DATE_TRUNC('month',order_ts)::date AS order_month, NVL(COUNT(*),0) AS order_count FROM core.orders GROUP BY sales_channel, DATE_TRUNC('month',order_ts)::date) report_rows GROUP BY \"order_month\"",
+      "grain": "one worksheet mark per order_month",
+      "keys": [
+        "order_month"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Retail Monthly Trend",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_channel_target_coverage",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Retail Channels.twb",
+      "kind": "tile",
+      "source": "redshift",
+      "sql": "SELECT \"sales_channel\" AS \"sales_channel\", SUM(\"order_count\")/100000.0 AS value FROM (SELECT sales_channel, DATE_TRUNC('month',order_ts)::date AS order_month, NVL(COUNT(*),0) AS order_count FROM core.orders GROUP BY sales_channel, DATE_TRUNC('month',order_ts)::date) report_rows GROUP BY \"sales_channel\"",
+      "grain": "one worksheet mark per sales_channel",
+      "keys": [
+        "sales_channel"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Channel Target Coverage",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_retail_channels_overview",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Retail Channels.twb",
+      "kind": "tile",
+      "source": "redshift",
+      "sql": "SELECT 'Retail Channels' AS tile_name, \"sales_channel\"::varchar(100) AS label, value FROM (SELECT \"sales_channel\" AS \"sales_channel\", SUM(\"order_count\") AS value FROM (SELECT sales_channel, DATE_TRUNC('month',order_ts)::date AS order_month, NVL(COUNT(*),0) AS order_count FROM core.orders GROUP BY sales_channel, DATE_TRUNC('month',order_ts)::date) report_rows GROUP BY \"sales_channel\") marks UNION ALL SELECT 'Retail Monthly Trend' AS tile_name, \"order_month\"::varchar(100) AS label, value FROM (SELECT \"order_month\" AS \"order_month\", SUM(\"order_count\") AS value FROM (SELECT sales_channel, DATE_TRUNC('month',order_ts)::date AS order_month, NVL(COUNT(*),0) AS order_count FROM core.orders GROUP BY sales_channel, DATE_TRUNC('month',order_ts)::date) report_rows GROUP BY \"order_month\") marks UNION ALL SELECT 'Channel Target Coverage' AS tile_name, \"sales_channel\"::varchar(100) AS label, value FROM (SELECT \"sales_channel\" AS \"sales_channel\", SUM(\"order_count\")/100000.0 AS value FROM (SELECT sales_channel, DATE_TRUNC('month',order_ts)::date AS order_month, NVL(COUNT(*),0) AS order_count FROM core.orders GROUP BY sales_channel, DATE_TRUNC('month',order_ts)::date) report_rows GROUP BY \"sales_channel\") marks",
+      "grain": "one row per dashboard worksheet mark",
+      "keys": [
+        "tile_name",
+        "label"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Retail Channels Overview",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_retail_channels_value_vs_target",
       "consumer": "tableau",
       "source_file": "consumers/tableau/Retail Channels.twb",
       "kind": "measure",
       "source": "redshift",
-      "sql": "SELECT sales_channel, COUNT(*)/100000.0 AS value_vs_target FROM core.orders GROUP BY sales_channel",
-      "grain": "worksheet mark by sales_channel",
+      "sql": "SELECT \"sales_channel\" AS \"sales_channel\", SUM(\"order_count\")/100000.0 AS value FROM (SELECT sales_channel, DATE_TRUNC('month',order_ts)::date AS order_month, NVL(COUNT(*),0) AS order_count FROM core.orders GROUP BY sales_channel, DATE_TRUNC('month',order_ts)::date) report_rows CROSS JOIN (SELECT SUM(\"order_count\") AS total_value FROM (SELECT sales_channel, DATE_TRUNC('month',order_ts)::date AS order_month, NVL(COUNT(*),0) AS order_count FROM core.orders GROUP BY sales_channel, DATE_TRUNC('month',order_ts)::date) total_rows) t GROUP BY \"sales_channel\"",
+      "grain": "worksheet calculation by sales_channel; Target Value=100000",
       "keys": [
         "sales_channel"
       ],
@@ -637,6 +838,235 @@
       "name": "Value vs Target",
       "parameters": {
         "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_retail_channels_above_target",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Retail Channels.twb",
+      "kind": "measure",
+      "source": "redshift",
+      "sql": "SELECT \"sales_channel\" AS \"sales_channel\", CASE WHEN SUM(\"order_count\")>=100000 THEN 1 ELSE 0 END AS value FROM (SELECT sales_channel, DATE_TRUNC('month',order_ts)::date AS order_month, NVL(COUNT(*),0) AS order_count FROM core.orders GROUP BY sales_channel, DATE_TRUNC('month',order_ts)::date) report_rows CROSS JOIN (SELECT SUM(\"order_count\") AS total_value FROM (SELECT sales_channel, DATE_TRUNC('month',order_ts)::date AS order_month, NVL(COUNT(*),0) AS order_count FROM core.orders GROUP BY sales_channel, DATE_TRUNC('month',order_ts)::date) total_rows) t GROUP BY \"sales_channel\"",
+      "grain": "worksheet calculation by sales_channel; Target Value=100000",
+      "keys": [
+        "sales_channel"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Above Target",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_retail_channels_share_of_total",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Retail Channels.twb",
+      "kind": "measure",
+      "source": "redshift",
+      "sql": "SELECT \"sales_channel\" AS \"sales_channel\", SUM(\"order_count\")*1.0/NULLIF(MAX(t.total_value),0) AS value FROM (SELECT sales_channel, DATE_TRUNC('month',order_ts)::date AS order_month, NVL(COUNT(*),0) AS order_count FROM core.orders GROUP BY sales_channel, DATE_TRUNC('month',order_ts)::date) report_rows CROSS JOIN (SELECT SUM(\"order_count\") AS total_value FROM (SELECT sales_channel, DATE_TRUNC('month',order_ts)::date AS order_month, NVL(COUNT(*),0) AS order_count FROM core.orders GROUP BY sales_channel, DATE_TRUNC('month',order_ts)::date) total_rows) t GROUP BY \"sales_channel\"",
+      "grain": "worksheet calculation by sales_channel; Target Value=100000",
+      "keys": [
+        "sales_channel"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Share of Total",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "measure_top_stock_item_sales",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.SemanticModel/definition/tables/Sale.tmdl",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT SUM(value) AS value FROM (SELECT TOP (10) i.[Stock Item Key] AS stock_item_key, i.[Stock Item] AS stock_item, SUM(s.[Total Excluding Tax]) AS value FROM Dimension.[Stock Item] i LEFT JOIN Fact.Sale s ON s.[Stock Item Key]=i.[Stock Item Key] GROUP BY i.[Stock Item Key],i.[Stock Item] ORDER BY value DESC,stock_item_key) top_items",
+      "grain": "one scalar; total sales for top ten stock item keys",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Top Stock Item Sales"
+    },
+    {
+      "id": "column_sales_band",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.SemanticModel/definition/tables/Sale.tmdl",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT [Sale Key] AS sale_key, [Invoice Date Key] AS invoice_date, CASE WHEN [Total Excluding Tax]>=1000 THEN 'High Value' ELSE 'Standard' END AS sales_band FROM Fact.Sale",
+      "grain": "calculated column per sale line",
+      "keys": [
+        "sale_key",
+        "invoice_date"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Sales Band"
+    },
+    {
+      "id": "visual_sales_by_territory",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.Report/report.json",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT c.[Sales Territory] AS territory, SUM(s.[Total Excluding Tax]) AS value FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory]",
+      "grain": "sales territory",
+      "keys": [
+        "territory"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Sales by Territory",
+      "visual_id": "sales_by_territory"
+    },
+    {
+      "id": "visual_sales_by_month",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.Report/report.json",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT d.[Beginning of Month] AS month, SUM(s.[Total Excluding Tax]) AS value FROM Fact.Sale s JOIN Dimension.[Date] d ON s.[Invoice Date Key]=d.[Date] GROUP BY d.[Beginning of Month]",
+      "grain": "calendar month",
+      "keys": [
+        "month"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Sales by Month",
+      "visual_id": "sales_by_month"
+    },
+    {
+      "id": "visual_top_stock_items",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.Report/report.json",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT TOP (10) i.[Stock Item Key] AS stock_item_key, i.[Stock Item] AS stock_item, SUM(s.[Total Excluding Tax]) AS value FROM Dimension.[Stock Item] i LEFT JOIN Fact.Sale s ON s.[Stock Item Key]=i.[Stock Item Key] GROUP BY i.[Stock Item Key],i.[Stock Item] ORDER BY value DESC,stock_item_key",
+      "grain": "top ten stock item keys by sales; ties by key",
+      "keys": [
+        "stock_item_key"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Top Stock Items",
+      "visual_id": "top_stock_items"
+    },
+    {
+      "id": "visual_sales_by_buying_group",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.Report/report.json",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT c.[Buying Group] AS buying_group, SUM(s.[Total Excluding Tax]) AS value FROM Fact.Sale s JOIN Dimension.Customer c ON s.[Customer Key]=c.[Customer Key] GROUP BY c.[Buying Group]",
+      "grain": "buying group",
+      "keys": [
+        "buying_group"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Sales by Buying Group",
+      "visual_id": "sales_by_buying_group"
+    },
+    {
+      "id": "measure_stock_on_hand",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Order Fulfilment.SemanticModel/definition/tables/Stock Holding.tmdl",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT SUM([Quantity On Hand]) AS value FROM Fact.[Stock Holding]",
+      "grain": "one scalar; unfiltered stock holdings",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Stock On Hand"
+    },
+    {
+      "id": "visual_stock_on_hand",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Order Fulfilment.Report/report.json",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT SUM([Quantity On Hand]) AS value FROM Fact.[Stock Holding]",
+      "grain": "one scalar; unfiltered stock holdings",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Stock On Hand",
+      "visual_id": "stock_on_hand"
+    },
+    {
+      "id": "measure_items_below_reorder",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Order Fulfilment.SemanticModel/definition/tables/Stock Holding.tmdl",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT COUNT(DISTINCT [Stock Item Key]) AS value FROM Fact.[Stock Holding] WHERE [Quantity On Hand]<[Reorder Level]",
+      "grain": "one scalar; unfiltered stock holdings",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Items Below Reorder"
+    },
+    {
+      "id": "visual_items_below_reorder",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Order Fulfilment.Report/report.json",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT COUNT(DISTINCT [Stock Item Key]) AS value FROM Fact.[Stock Holding] WHERE [Quantity On Hand]<[Reorder Level]",
+      "grain": "one scalar; unfiltered stock holdings",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Items Below Reorder",
+      "visual_id": "items_below_reorder"
+    },
+    {
+      "id": "api_customer_orders",
+      "consumer": "api",
+      "source_file": "consumers/api/main.py",
+      "kind": "endpoint",
+      "source": "mssql",
+      "sql": "SELECT TOP (20) [WWI Order ID] AS order_id, [Order Date Key] AS order_date, SUM([Total Excluding Tax]) AS order_value, SUM([Quantity]) AS quantity, SUM(CASE WHEN [Picked Date Key] IS NULL THEN 1 ELSE 0 END) AS unpicked_lines FROM Fact.[Order] WHERE [Customer Key]=1 GROUP BY [WWI Order ID],[Order Date Key] ORDER BY order_date DESC,order_id DESC",
+      "grain": "latest 20 customer orders by date and order ID",
+      "keys": [
+        "order_date",
+        "order_id"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "path": "/customers/1/orders",
+      "sample_params": {
+        "customer_key": 1,
+        "limit": 20
       }
     }
   ]

@@ -1,42 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<workbook original-version="18.1" source-build="2023.1.0" source-platform="win" version="18.1" xmlns:user="http://www.tableausoftware.com/xml/user">
-  <preferences/>
-  <datasources>
-    <datasource name="Parameters" hasconnection="false" inline="true" version="18.1">
-      <column caption="Target Value" datatype="real" name="[Target Value]" param-domain-type="any" role="measure" type="quantitative" value="100000">
-        <calculation class="tableau" formula="100000"/>
-      </column>
-    </datasource>
-    <datasource caption="Retail Channels" inline="true" name="Reporting" version="18.1">
-      <connection class="redshift" server="wwi-retail.corp.local" dbname="retail" authentication="prompt" port="5439">
-        <relation name="ReportQuery" type="text">SELECT sales_channel, COUNT(*) AS order_count FROM core.orders GROUP BY sales_channel</relation>
-      </connection>
-      <column datatype="string" name="[sales_channel]" role="dimension" type="nominal"/>
-      <column datatype="real" name="[order_count]" role="measure" type="quantitative"/>
-      <column caption="Value vs Target" datatype="real" name="[Value vs Target]" role="measure" type="quantitative">
-        <calculation class="tableau" formula="SUM([order_count]) / [Parameters].[Target Value]"/>
-      </column>
-    </datasource>
-  </datasources>
-  <worksheets>
-    <worksheet name="Retail Channels">
-      <table>
-        <view>
-          <datasources><datasource caption="Retail Channels" name="Reporting"/><datasource name="Parameters"/></datasources>
-          <datasource-dependencies datasource="Reporting">
-            <column datatype="string" name="[sales_channel]" role="dimension" type="nominal"/>
-            <column datatype="real" name="[order_count]" role="measure" type="quantitative"/>
-            <column-instance column="[sales_channel]" derivation="None" name="[none:sales_channel:nk]" pivot="key" type="nominal"/>
-            <column-instance column="[order_count]" derivation="Sum" name="[sum:order_count:qk]" pivot="key" type="quantitative"/>
-          </datasource-dependencies>
-          <aggregation value="true"/>
-        </view>
-        <style/>
-        <panes><pane selection-relaxation-option="selection-relaxation-allow"><view><breakdown value="auto"/></view><mark class="Bar"/></pane></panes>
-        <rows>[Reporting].[none:sales_channel:nk]</rows><cols>[Reporting].[sum:order_count:qk]</cols>
-      </table>
-    </worksheet>
-  </worksheets>
-  <dashboards><dashboard name="Retail Channels Overview"><style/><size maxheight="800" maxwidth="1200" minheight="800" minwidth="1200"/><zones><zone h="100000" id="1" name="Retail Channels" w="100000" x="0" y="0"/></zones></dashboard></dashboards>
-  <windows><window class="worksheet" name="Retail Channels"/><window class="dashboard" name="Retail Channels Overview"/></windows>
-</workbook>
+<workbook original-version="18.1" source-build="2023.1.0" source-platform="win" version="18.1" xmlns:user="http://www.tableausoftware.com/xml/user"><preferences/><datasources>
+<datasource name="Parameters" hasconnection="false" inline="true" version="18.1"><column caption="Target Value" datatype="real" name="[Target Value]" param-domain-type="any" role="measure" type="quantitative" value="100000"><calculation class="tableau" formula="100000"/></column></datasource>
+<datasource caption="Retail Channels" inline="true" name="Reporting" version="18.1">
+<connection class="redshift" server="wwi-retail.corp.local" dbname="retail" authentication="prompt" port="5439">
+<relation name="ReportingQuery" type="text">SELECT sales_channel, DATE_TRUNC('month',order_ts)::date AS order_month, NVL(COUNT(*),0) AS order_count FROM core.orders GROUP BY sales_channel, DATE_TRUNC('month',order_ts)::date</relation></connection>
+<column datatype="string" name="[sales_channel]" role="dimension" type="nominal"/>
+<column datatype="date" name="[order_month]" role="dimension" type="nominal"/>
+<column datatype="integer" name="[order_count]" role="measure" type="quantitative"/><column caption="Value vs Target" datatype="real" name="[Value vs Target]" role="measure" type="quantitative"><calculation class="tableau" formula="ZN(SUM([order_count])) / [Parameters].[Target Value]"/></column>
+<column caption="Above Target" datatype="real" name="[Above Target]" role="measure" type="quantitative"><calculation class="tableau" formula="IIF(ZN(SUM([order_count])) >= [Parameters].[Target Value], 1, 0)"/></column>
+<column caption="Share of Total" datatype="real" name="[Share of Total]" role="measure" type="quantitative"><calculation class="tableau" formula="ZN(SUM([order_count])) / MIN({FIXED : SUM([order_count])})"/></column></datasource>
+
+</datasources><worksheets><worksheet name="Retail Channels"><table><view><datasources><datasource name="Reporting" caption="Retail Channels"/><datasource name="Parameters"/></datasources>
+<datasource-dependencies datasource="Reporting"><column datatype="string" name="[sales_channel]" role="dimension" type="nominal"/>
+<column datatype="date" name="[order_month]" role="dimension" type="nominal"/>
+<column datatype="integer" name="[order_count]" role="measure" type="quantitative"/><column caption="Value vs Target" datatype="real" name="[Value vs Target]" role="measure" type="quantitative"><calculation class="tableau" formula="ZN(SUM([order_count])) / [Parameters].[Target Value]"/></column>
+<column caption="Above Target" datatype="real" name="[Above Target]" role="measure" type="quantitative"><calculation class="tableau" formula="IIF(ZN(SUM([order_count])) >= [Parameters].[Target Value], 1, 0)"/></column>
+<column caption="Share of Total" datatype="real" name="[Share of Total]" role="measure" type="quantitative"><calculation class="tableau" formula="ZN(SUM([order_count])) / MIN({FIXED : SUM([order_count])})"/></column>
+<column-instance column="[sales_channel]" derivation="None" name="[none:sales_channel:nk]" pivot="key" type="nominal"/>
+<column-instance column="[order_count]" derivation="Sum" name="[sum:order_count:qk]" pivot="key" type="quantitative"/>
+
+</datasource-dependencies><aggregation value="true"/></view><style/>
+<panes><pane selection-relaxation-option="selection-relaxation-allow"><view><breakdown value="auto"/></view><mark class="Bar"/></pane></panes>
+<rows>[Reporting].[none:sales_channel:nk]</rows><cols>[Reporting].[sum:order_count:qk]</cols></table></worksheet>
+<worksheet name="Retail Monthly Trend"><table><view><datasources><datasource name="Reporting" caption="Retail Channels"/><datasource name="Parameters"/></datasources>
+<datasource-dependencies datasource="Reporting"><column datatype="string" name="[sales_channel]" role="dimension" type="nominal"/>
+<column datatype="date" name="[order_month]" role="dimension" type="nominal"/>
+<column datatype="integer" name="[order_count]" role="measure" type="quantitative"/><column caption="Value vs Target" datatype="real" name="[Value vs Target]" role="measure" type="quantitative"><calculation class="tableau" formula="ZN(SUM([order_count])) / [Parameters].[Target Value]"/></column>
+<column caption="Above Target" datatype="real" name="[Above Target]" role="measure" type="quantitative"><calculation class="tableau" formula="IIF(ZN(SUM([order_count])) >= [Parameters].[Target Value], 1, 0)"/></column>
+<column caption="Share of Total" datatype="real" name="[Share of Total]" role="measure" type="quantitative"><calculation class="tableau" formula="ZN(SUM([order_count])) / MIN({FIXED : SUM([order_count])})"/></column>
+<column-instance column="[order_month]" derivation="None" name="[none:order_month:nk]" pivot="key" type="nominal"/>
+<column-instance column="[order_count]" derivation="Sum" name="[sum:order_count:qk]" pivot="key" type="quantitative"/>
+
+</datasource-dependencies><aggregation value="true"/></view><style/>
+<panes><pane selection-relaxation-option="selection-relaxation-allow"><view><breakdown value="auto"/></view><mark class="Bar"/></pane></panes>
+<rows>[Reporting].[none:order_month:nk]</rows><cols>[Reporting].[sum:order_count:qk]</cols></table></worksheet>
+<worksheet name="Channel Target Coverage"><table><view><datasources><datasource name="Reporting" caption="Retail Channels"/><datasource name="Parameters"/></datasources>
+<datasource-dependencies datasource="Reporting"><column datatype="string" name="[sales_channel]" role="dimension" type="nominal"/>
+<column datatype="date" name="[order_month]" role="dimension" type="nominal"/>
+<column datatype="integer" name="[order_count]" role="measure" type="quantitative"/><column caption="Value vs Target" datatype="real" name="[Value vs Target]" role="measure" type="quantitative"><calculation class="tableau" formula="ZN(SUM([order_count])) / [Parameters].[Target Value]"/></column>
+<column caption="Above Target" datatype="real" name="[Above Target]" role="measure" type="quantitative"><calculation class="tableau" formula="IIF(ZN(SUM([order_count])) >= [Parameters].[Target Value], 1, 0)"/></column>
+<column caption="Share of Total" datatype="real" name="[Share of Total]" role="measure" type="quantitative"><calculation class="tableau" formula="ZN(SUM([order_count])) / MIN({FIXED : SUM([order_count])})"/></column>
+<column-instance column="[sales_channel]" derivation="None" name="[none:sales_channel:nk]" pivot="key" type="nominal"/>
+<column-instance column="[Value vs Target]" derivation="User" name="[usr:Value vs Target:qk]" pivot="key" type="quantitative"/>
+<column-instance column="[Above Target]" derivation="User" name="[usr:Above Target:qk]" pivot="key" type="quantitative"/><column-instance column="[Share of Total]" derivation="User" name="[usr:Share of Total:qk]" pivot="key" type="quantitative"/>
+</datasource-dependencies><aggregation value="true"/></view><style/>
+<panes><pane selection-relaxation-option="selection-relaxation-allow"><view><breakdown value="auto"/></view><mark class="Bar"/><encodings><color column="[Reporting].[usr:Above Target:qk]"/><size column="[Reporting].[usr:Share of Total:qk]"/></encodings></pane></panes>
+<rows>[Reporting].[none:sales_channel:nk]</rows><cols>[Reporting].[usr:Value vs Target:qk]</cols></table></worksheet></worksheets><dashboards>
+<dashboard name="Retail Channels Overview"><style/><size maxheight="900" maxwidth="1200" minheight="900" minwidth="1200"/><zones>
+<zone h="33333" id="1" name="Retail Channels" w="100000" x="0" y="0"/>
+<zone h="33333" id="2" name="Retail Monthly Trend" w="100000" x="0" y="33333"/>
+<zone h="33334" id="3" name="Channel Target Coverage" w="100000" x="0" y="66666"/>
+</zones></dashboard></dashboards><windows><window class="worksheet" name="Retail Channels"/><window class="worksheet" name="Retail Monthly Trend"/><window class="worksheet" name="Channel Target Coverage"/><window class="dashboard" name="Retail Channels Overview"/></windows></workbook>

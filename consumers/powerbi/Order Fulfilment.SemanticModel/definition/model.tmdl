@@ -9,3 +9,5 @@ ref table 'Date'
 ref table 'Customer'
 ref table 'City'
 ref table 'Stock Item'
+
+ref table 'Stock Holding'

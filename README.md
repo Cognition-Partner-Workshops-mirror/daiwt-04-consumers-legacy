@@ -10,23 +10,32 @@ passwords or connection tokens are checked in. Database access is SELECT-only.
 | Consumer | Audience | Source tables | Refresh |
 | --- | --- | --- | --- |
 | Power BI: Sales Performance | Sales leadership | Fact.Sale; Dimension.Date, Customer, City, Stock Item | Import, 06:00 daily |
-| Power BI: Order Fulfilment | Operations and regional managers | Fact.Order; Dimension.Date, Customer, City, Stock Item | Import, 06:00 daily |
-| Tableau: Regional Sales | Regional managers | Fact.Sale, Dimension.City | Extract, hourly |
+| Power BI: Order Fulfilment | Operations and regional managers | Fact.Order, Stock Holding; Dimension.Date, Customer, City, Stock Item | Import, 06:00 daily |
+| Tableau: Regional Sales | Regional managers | Fact.Sale, Dimension.City, Customer | Extract, hourly |
 | Tableau: Order Pipeline | Operations | Fact.Order | Extract, hourly |
 | Tableau: Retail Channels | Retail leadership | Redshift core.orders | Extract, hourly |
-| Customer & KPI reporting API | Customer portal | Fact.Sale; Dimension.City, Stock Item | Live on each request |
+| Customer & KPI reporting API | Customer portal | Fact.Sale, Order; Dimension.City, Stock Item | Live on each request |
 | Monthly sales notebook and finance SQL | Finance analysts | Fact.Sale | Ad hoc |
 
 The two PBIP projects include TMDL semantic definitions, M connection parameters,
 native T-SQL fact partitions, dimension relationships, and report cards. The
 Sales YoY card compares calendar 2016 with 2015; other cards show the unfiltered
-warehouse. Financial ratios are fractions, not percentage points. Order counts
+warehouse. The Sales Analysis page breaks sales down by territory, calendar
+month, top ten stock items, and buying group. A Sales Band calculated column
+classifies invoice lines at a 1,000 value threshold. Order Fulfilment includes
+stock-on-hand and below-reorder indicators from Fact.Stock Holding.
+Financial ratios are fractions, not percentage points. Order counts
 use distinct warehouse order IDs, not line counts. See `consumers/powerbi/NOTICE`
 and `LICENSE` there for the upstream format attribution.
 
-The three Tableau workbooks contain Custom SQL, a Target Value parameter, and a
-Value vs Target calculated field. Each worksheet also appears in an Overview
-dashboard. SQL Server Custom SQL retains its native T-SQL syntax; the retail
+Each Tableau workbook contains three worksheets and an Overview dashboard with
+all three sheets. Regional Sales covers territories, leading customers, and
+regional targets; Order Pipeline covers monthly order value, unpicked lines,
+and target coverage; Retail Channels covers channels, monthly trends, and
+channel targets. Each retains a Target Value parameter and calculated fields
+for Value vs Target, Above Target, and Share of Total. Regional Sales uses a
+second Custom SQL datasource for its customer ranking.
+SQL Server Custom SQL retains its native T-SQL syntax; the retail
 workbook uses Redshift SQL. The retail datasource's logical server and database
 must be mapped to the managed connection by the workbook publisher. Automated
 query execution uses **only the Redshift Data API**, never a TCP connection.
@@ -42,6 +51,7 @@ Supply credentials at runtime; do not include them in a build context or image.
 | Endpoint | Result grain | Example |
 | --- | --- | --- |
 | `/customers/{customer_key}/summary` | One customer's invoiced sales, profit and invoice count | `/customers/1/summary` |
+| `/customers/{customer_key}/orders?limit=` | Latest customer orders with value, quantity and unpicked lines; default 20, maximum 100 | `/customers/1/orders?limit=20` |
 | `/kpis/monthly?year=` | Calendar month with sales | `/kpis/monthly?year=2016` |
 | `/sales/by-territory?year=` | Territory | `/sales/by-territory?year=2016` |
 | `/stock-items/top?limit=` | Stock item, ranked by sales | `/stock-items/top?limit=10` |

@@ -1,0 +1,37 @@
+table 'Stock Holding'
+
+	measure 'Stock On Hand' = SUM('Stock Holding'[Quantity On Hand])
+		formatString: #,0
+
+	measure 'Items Below Reorder' = CALCULATE(DISTINCTCOUNT('Stock Holding'[Stock Item Key]), FILTER('Stock Holding', 'Stock Holding'[Quantity On Hand] < 'Stock Holding'[Reorder Level]))
+		formatString: #,0
+
+	column 'Stock Holding Key'
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: Stock Holding Key
+
+	column 'Stock Item Key'
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: Stock Item Key
+
+	column 'Quantity On Hand'
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: Quantity On Hand
+
+	column 'Reorder Level'
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: Reorder Level
+
+	column 'Last Cost Price'
+		dataType: decimal
+		summarizeBy: none
+		sourceColumn: Last Cost Price
+
+	partition 'Stock Holding' = m
+		mode: import
+		source =
+			Value.NativeQuery(Sql.Database(Server, Database), "SELECT [Stock Holding Key], [Stock Item Key], [Quantity On Hand], [Reorder Level], [Last Cost Price] FROM Fact.[Stock Holding]", null, [EnableFolding=true])

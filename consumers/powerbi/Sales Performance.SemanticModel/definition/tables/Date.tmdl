@@ -17,12 +17,17 @@ table 'Date'
 		summarizeBy: none
 		sourceColumn: Calendar Month Number
 
+	column 'Beginning of Month'
+		dataType: dateTime
+		summarizeBy: none
+		sourceColumn: Beginning of Month
+
 	partition 'Date' = m
 		mode: import
 		source =
 			let
 				Source = Sql.Database(Server, Database),
 				Data = Source{[Schema="Dimension", Item="Date"]}[Data],
-				Selected = Table.SelectColumns(Data, {"Date", "Calendar Year", "Calendar Month Number"})
+				Selected = Table.SelectColumns(Data, {"Date", "Calendar Year", "Calendar Month Number", "Beginning of Month"})
 			in
 				Selected

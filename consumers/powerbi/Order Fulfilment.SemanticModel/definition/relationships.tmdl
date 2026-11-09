@@ -13,3 +13,7 @@ relationship order_2
 relationship order_3
 	fromColumn: 'Order'.'Stock Item Key'
 	toColumn: 'Stock Item'.'Stock Item Key'
+
+relationship stock_holding_stock_item
+	fromColumn: 'Stock Holding'.'Stock Item Key'
+	toColumn: 'Stock Item'.'Stock Item Key'

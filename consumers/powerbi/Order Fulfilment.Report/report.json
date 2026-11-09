@@ -39,6 +39,26 @@
           "config": "{\"name\":\"card2\",\"layouts\":[{\"id\":0,\"position\":{\"x\":800,\"y\":0,\"z\":2,\"width\":380,\"height\":200}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"Order.Unpicked Lines\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"order\",\"Entity\":\"Order\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"order\"}},\"Property\":\"Unpicked Lines\"},\"Name\":\"Order.Unpicked Lines\"}]},\"drillFilterOtherVisuals\":true}}",
           "filters": "[]",
           "query": "{\"Commands\":[{\"SemanticQueryDataShapeCommand\":{\"Query\":{\"Version\":2,\"From\":[{\"Name\":\"order\",\"Entity\":\"Order\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"order\"}},\"Property\":\"Unpicked Lines\"},\"Name\":\"Order.Unpicked Lines\"}]},\"Binding\":{\"Primary\":{\"Groupings\":[{\"Projections\":[0]}]},\"Version\":1},\"ExecutionMetricsKind\":1}}]}"
+        },
+        {
+          "x": 0,
+          "y": 350,
+          "z": 0,
+          "width": 590,
+          "height": 320,
+          "config": "{\"name\":\"stock_on_hand\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":350,\"z\":0,\"width\":590,\"height\":320}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"Stock Holding.Stock On Hand\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"Stock Holding\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Stock On Hand\"},\"Name\":\"Stock Holding.Stock On Hand\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "query": "{\"Commands\":[{\"SemanticQueryDataShapeCommand\":{\"Query\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"Stock Holding\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Stock On Hand\"},\"Name\":\"Stock Holding.Stock On Hand\"}]},\"Binding\":{\"Primary\":{\"Groupings\":[{\"Projections\":[0]}]},\"Version\":1},\"ExecutionMetricsKind\":1}}]}"
+        },
+        {
+          "x": 620,
+          "y": 350,
+          "z": 0,
+          "width": 590,
+          "height": 320,
+          "config": "{\"name\":\"items_below_reorder\",\"layouts\":[{\"id\":0,\"position\":{\"x\":620,\"y\":350,\"z\":0,\"width\":590,\"height\":320}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"Stock Holding.Items Below Reorder\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"Stock Holding\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Items Below Reorder\"},\"Name\":\"Stock Holding.Items Below Reorder\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "query": "{\"Commands\":[{\"SemanticQueryDataShapeCommand\":{\"Query\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"Stock Holding\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Items Below Reorder\"},\"Name\":\"Stock Holding.Items Below Reorder\"}]},\"Binding\":{\"Primary\":{\"Groupings\":[{\"Projections\":[0]}]},\"Version\":1},\"ExecutionMetricsKind\":1}}]}"
         }
       ],
       "filters": "[]",

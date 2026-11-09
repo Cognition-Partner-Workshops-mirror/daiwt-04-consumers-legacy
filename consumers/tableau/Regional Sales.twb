@@ -1,42 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<workbook original-version="18.1" source-build="2023.1.0" source-platform="win" version="18.1" xmlns:user="http://www.tableausoftware.com/xml/user">
-  <preferences/>
-  <datasources>
-    <datasource name="Parameters" hasconnection="false" inline="true" version="18.1">
-      <column caption="Target Value" datatype="real" name="[Target Value]" param-domain-type="any" role="measure" type="quantitative" value="100000">
-        <calculation class="tableau" formula="100000"/>
-      </column>
-    </datasource>
-    <datasource caption="Regional Sales" inline="true" name="Reporting" version="18.1">
-      <connection class="sqlserver" server="wwi-dw.corp.local" dbname="WideWorldImportersDW" authentication="prompt" port="1433">
-        <relation name="ReportQuery" type="text">SELECT TOP (100) c.[Sales Territory] AS territory, DATEPART(year,s.[Invoice Date Key]) AS sales_year, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory], DATEPART(year,s.[Invoice Date Key])</relation>
-      </connection>
-      <column datatype="string" name="[territory]" role="dimension" type="nominal"/>
-      <column datatype="real" name="[sales]" role="measure" type="quantitative"/>
-      <column caption="Value vs Target" datatype="real" name="[Value vs Target]" role="measure" type="quantitative">
-        <calculation class="tableau" formula="SUM([sales]) / [Parameters].[Target Value]"/>
-      </column>
-    </datasource>
-  </datasources>
-  <worksheets>
-    <worksheet name="Regional Sales">
-      <table>
-        <view>
-          <datasources><datasource caption="Regional Sales" name="Reporting"/><datasource name="Parameters"/></datasources>
-          <datasource-dependencies datasource="Reporting">
-            <column datatype="string" name="[territory]" role="dimension" type="nominal"/>
-            <column datatype="real" name="[sales]" role="measure" type="quantitative"/>
-            <column-instance column="[territory]" derivation="None" name="[none:territory:nk]" pivot="key" type="nominal"/>
-            <column-instance column="[sales]" derivation="Sum" name="[sum:sales:qk]" pivot="key" type="quantitative"/>
-          </datasource-dependencies>
-          <aggregation value="true"/>
-        </view>
-        <style/>
-        <panes><pane selection-relaxation-option="selection-relaxation-allow"><view><breakdown value="auto"/></view><mark class="Bar"/></pane></panes>
-        <rows>[Reporting].[none:territory:nk]</rows><cols>[Reporting].[sum:sales:qk]</cols>
-      </table>
-    </worksheet>
-  </worksheets>
-  <dashboards><dashboard name="Regional Sales Overview"><style/><size maxheight="800" maxwidth="1200" minheight="800" minwidth="1200"/><zones><zone h="100000" id="1" name="Regional Sales" w="100000" x="0" y="0"/></zones></dashboard></dashboards>
-  <windows><window class="worksheet" name="Regional Sales"/><window class="dashboard" name="Regional Sales Overview"/></windows>
-</workbook>
+<workbook original-version="18.1" source-build="2023.1.0" source-platform="win" version="18.1" xmlns:user="http://www.tableausoftware.com/xml/user"><preferences/><datasources>
+<datasource name="Parameters" hasconnection="false" inline="true" version="18.1"><column caption="Target Value" datatype="real" name="[Target Value]" param-domain-type="any" role="measure" type="quantitative" value="100000"><calculation class="tableau" formula="100000"/></column></datasource>
+<datasource caption="Regional Sales" inline="true" name="Reporting" version="18.1">
+<connection class="sqlserver" server="wwi-dw.corp.local" dbname="WideWorldImportersDW" authentication="prompt" port="1433">
+<relation name="ReportingQuery" type="text">SELECT TOP (100) c.[Sales Territory] AS territory, DATEPART(year,s.[Invoice Date Key]) AS sales_year, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory], DATEPART(year,s.[Invoice Date Key]) ORDER BY sales DESC, territory, sales_year</relation></connection>
+<column datatype="string" name="[territory]" role="dimension" type="nominal"/>
+<column datatype="integer" name="[sales_year]" role="dimension" type="nominal"/>
+<column datatype="real" name="[sales]" role="measure" type="quantitative"/><column caption="Value vs Target" datatype="real" name="[Value vs Target]" role="measure" type="quantitative"><calculation class="tableau" formula="ZN(SUM([sales])) / [Parameters].[Target Value]"/></column>
+<column caption="Above Target" datatype="real" name="[Above Target]" role="measure" type="quantitative"><calculation class="tableau" formula="IIF(ZN(SUM([sales])) >= [Parameters].[Target Value], 1, 0)"/></column>
+<column caption="Share of Total" datatype="real" name="[Share of Total]" role="measure" type="quantitative"><calculation class="tableau" formula="ZN(SUM([sales])) / MIN({FIXED : SUM([sales])})"/></column></datasource>
+<datasource caption="Regional Sales Customers" inline="true" name="CustomerRanking" version="18.1">
+<connection class="sqlserver" server="wwi-dw.corp.local" dbname="WideWorldImportersDW" authentication="prompt" port="1433">
+<relation name="CustomerRankingQuery" type="text">SELECT TOP (20) c.[Customer Key] AS customer_key, c.[Customer] AS customer, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.Customer c ON s.[Customer Key]=c.[Customer Key] GROUP BY c.[Customer Key],c.[Customer] ORDER BY sales DESC, customer_key</relation></connection>
+<column datatype="integer" name="[customer_key]" role="measure" type="quantitative"/>
+<column datatype="string" name="[customer]" role="dimension" type="nominal"/>
+<column datatype="real" name="[sales]" role="measure" type="quantitative"/></datasource>
+</datasources><worksheets><worksheet name="Regional Sales"><table><view><datasources><datasource name="Reporting" caption="Regional Sales"/><datasource name="Parameters"/></datasources>
+<datasource-dependencies datasource="Reporting"><column datatype="string" name="[territory]" role="dimension" type="nominal"/>
+<column datatype="integer" name="[sales_year]" role="dimension" type="nominal"/>
+<column datatype="real" name="[sales]" role="measure" type="quantitative"/><column caption="Value vs Target" datatype="real" name="[Value vs Target]" role="measure" type="quantitative"><calculation class="tableau" formula="ZN(SUM([sales])) / [Parameters].[Target Value]"/></column>
+<column caption="Above Target" datatype="real" name="[Above Target]" role="measure" type="quantitative"><calculation class="tableau" formula="IIF(ZN(SUM([sales])) >= [Parameters].[Target Value], 1, 0)"/></column>
+<column caption="Share of Total" datatype="real" name="[Share of Total]" role="measure" type="quantitative"><calculation class="tableau" formula="ZN(SUM([sales])) / MIN({FIXED : SUM([sales])})"/></column>
+<column-instance column="[territory]" derivation="None" name="[none:territory:nk]" pivot="key" type="nominal"/>
+<column-instance column="[sales]" derivation="Sum" name="[sum:sales:qk]" pivot="key" type="quantitative"/>
+
+</datasource-dependencies><aggregation value="true"/></view><style/>
+<panes><pane selection-relaxation-option="selection-relaxation-allow"><view><breakdown value="auto"/></view><mark class="Bar"/></pane></panes>
+<rows>[Reporting].[none:territory:nk]</rows><cols>[Reporting].[sum:sales:qk]</cols></table></worksheet>
+<worksheet name="Leading Customers"><table><view><datasources><datasource name="CustomerRanking" caption="Regional Sales"/><datasource name="Parameters"/></datasources>
+<datasource-dependencies datasource="CustomerRanking"><column datatype="integer" name="[customer_key]" role="measure" type="quantitative"/>
+<column datatype="string" name="[customer]" role="dimension" type="nominal"/>
+<column datatype="real" name="[sales]" role="measure" type="quantitative"/>
+<column-instance column="[customer]" derivation="None" name="[none:customer:nk]" pivot="key" type="nominal"/>
+<column-instance column="[sales]" derivation="Sum" name="[sum:sales:qk]" pivot="key" type="quantitative"/>
+
+</datasource-dependencies><aggregation value="true"/></view><style/>
+<panes><pane selection-relaxation-option="selection-relaxation-allow"><view><breakdown value="auto"/></view><mark class="Bar"/></pane></panes>
+<rows>[CustomerRanking].[none:customer:nk]</rows><cols>[CustomerRanking].[sum:sales:qk]</cols></table></worksheet>
+<worksheet name="Regional Targets"><table><view><datasources><datasource name="Reporting" caption="Regional Sales"/><datasource name="Parameters"/></datasources>
+<datasource-dependencies datasource="Reporting"><column datatype="string" name="[territory]" role="dimension" type="nominal"/>
+<column datatype="integer" name="[sales_year]" role="dimension" type="nominal"/>
+<column datatype="real" name="[sales]" role="measure" type="quantitative"/><column caption="Value vs Target" datatype="real" name="[Value vs Target]" role="measure" type="quantitative"><calculation class="tableau" formula="ZN(SUM([sales])) / [Parameters].[Target Value]"/></column>
+<column caption="Above Target" datatype="real" name="[Above Target]" role="measure" type="quantitative"><calculation class="tableau" formula="IIF(ZN(SUM([sales])) >= [Parameters].[Target Value], 1, 0)"/></column>
+<column caption="Share of Total" datatype="real" name="[Share of Total]" role="measure" type="quantitative"><calculation class="tableau" formula="ZN(SUM([sales])) / MIN({FIXED : SUM([sales])})"/></column>
+<column-instance column="[territory]" derivation="None" name="[none:territory:nk]" pivot="key" type="nominal"/>
+<column-instance column="[Value vs Target]" derivation="User" name="[usr:Value vs Target:qk]" pivot="key" type="quantitative"/>
+<column-instance column="[Above Target]" derivation="User" name="[usr:Above Target:qk]" pivot="key" type="quantitative"/><column-instance column="[Share of Total]" derivation="User" name="[usr:Share of Total:qk]" pivot="key" type="quantitative"/>
+</datasource-dependencies><aggregation value="true"/></view><style/>
+<panes><pane selection-relaxation-option="selection-relaxation-allow"><view><breakdown value="auto"/></view><mark class="Bar"/><encodings><color column="[Reporting].[usr:Above Target:qk]"/><size column="[Reporting].[usr:Share of Total:qk]"/></encodings></pane></panes>
+<rows>[Reporting].[none:territory:nk]</rows><cols>[Reporting].[usr:Value vs Target:qk]</cols></table></worksheet></worksheets><dashboards>
+<dashboard name="Regional Sales Overview"><style/><size maxheight="900" maxwidth="1200" minheight="900" minwidth="1200"/><zones>
+<zone h="33333" id="1" name="Regional Sales" w="100000" x="0" y="0"/>
+<zone h="33333" id="2" name="Leading Customers" w="100000" x="0" y="33333"/>
+<zone h="33334" id="3" name="Regional Targets" w="100000" x="0" y="66666"/>
+</zones></dashboard></dashboards><windows><window class="worksheet" name="Regional Sales"/><window class="worksheet" name="Leading Customers"/><window class="worksheet" name="Regional Targets"/><window class="dashboard" name="Regional Sales Overview"/></windows></workbook>

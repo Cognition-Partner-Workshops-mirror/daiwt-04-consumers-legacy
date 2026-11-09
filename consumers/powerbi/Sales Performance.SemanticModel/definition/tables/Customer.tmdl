@@ -10,12 +10,17 @@ table 'Customer'
 		summarizeBy: none
 		sourceColumn: Customer
 
+	column 'Buying Group'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Buying Group
+
 	partition 'Customer' = m
 		mode: import
 		source =
 			let
 				Source = Sql.Database(Server, Database),
 				Data = Source{[Schema="Dimension", Item="Customer"]}[Data],
-				Selected = Table.SelectColumns(Data, {"Customer Key", "Customer"})
+				Selected = Table.SelectColumns(Data, {"Customer Key", "Customer", "Buying Group"})
 			in
 				Selected

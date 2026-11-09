@@ -13,3 +13,9 @@ TOP_ITEMS = """SELECT TOP (?) s.[Stock Item Key] AS stock_item_key, i.[Stock Ite
 SUM(s.[Total Excluding Tax]) AS sales FROM Fact.Sale s
 JOIN Dimension.[Stock Item] i ON s.[Stock Item Key]=i.[Stock Item Key]
 GROUP BY s.[Stock Item Key],i.[Stock Item] ORDER BY sales DESC, stock_item_key"""
+CUSTOMER_ORDERS = """SELECT TOP (?) [WWI Order ID] AS order_id, [Order Date Key] AS order_date,
+SUM([Total Excluding Tax]) AS order_value, SUM([Quantity]) AS quantity,
+SUM(CASE WHEN [Picked Date Key] IS NULL THEN 1 ELSE 0 END) AS unpicked_lines
+FROM Fact.[Order] WHERE [Customer Key] = ?
+GROUP BY [WWI Order ID], [Order Date Key]
+ORDER BY order_date DESC, order_id DESC"""
