@@ -2,7 +2,7 @@
 
 This repository contains the analytics team's reporting estate. SQL Server's
 WideWorldImportersDW warehouse is the primary source. Connections use
-`wwi-dw.corp.local`. No data,
+`daiwt-02-sqlserver.c0x4mes64o5e.us-east-1.rds.amazonaws.com`. No data,
 passwords or connection tokens are checked in. Database access is SELECT-only.
 
 ## Consumer inventory
@@ -43,7 +43,14 @@ query execution uses **only the Redshift Data API**, never a TCP connection.
 ## API
 
 The Python service uses **pyodbc with Microsoft ODBC Driver 18 for SQL Server**.
-Connections require encryption and validate the server certificate. Install the
+Connections require encryption and validate the server certificate by default.
+For a warehouse certificate that cannot be validated against the configured
+hostname or trusted CA, explicitly export `MSSQL_TRUST_SERVER_CERTIFICATE=yes`.
+This keeps traffic encrypted but disables server identity verification for the
+API, notebook, connectivity check and baseline capture; leave it unset or set
+to `no` when certificate validation is available. Power BI and Tableau use
+their own client certificate settings.
+Install the
 driver on the host or build from the repository root with
 `docker build -f consumers/api/Dockerfile -t wwi-reporting .`.
 Supply credentials at runtime; do not include them in a build context or image.
@@ -83,7 +90,7 @@ loader reads two Secrets Manager secrets selected by `MSSQL_SECRET_NAME` and
 `REDSHIFT_SECRET_ARN`, `REDSHIFT_WORKGROUP`, and `REDSHIFT_DATABASE` for Data API
 access. It does not write credentials to disk. Export `MSSQL_HOST` before sourcing
 to override the host stored in the SQL secret. If the secret contains only
-username/password, the host defaults to `wwi-dw.corp.local`. `make setup` checks
+username/password, the host defaults to `daiwt-02-sqlserver.c0x4mes64o5e.us-east-1.rds.amazonaws.com`. `make setup` checks
 warehouse connectivity.
 
 `make test` runs offline tests using mocked connections. For live contract tests,
@@ -109,6 +116,14 @@ redshift` or use `--source mssql`. The default is `--source all`. Each run write
 a manifest for the selected source only; existing files for other sources are
 left untouched. Capture timestamps change each run; data-file hashes can be
 compared to check repeatability.
+
+Captures execute entries sequentially with a 120-second per-query limit. Use
+`--query-timeout 300` to select a different limit; timed-out Redshift statements
+are cancelled through the Data API. The API and notebook use
+`MSSQL_QUERY_TIMEOUT_SECONDS` (default 120). The manifest records `query_seconds`
+for each source SELECT, excluding endpoint HTTP capture and file serialization.
+The SQL Server regression queries use per-statement memory-grant bounds; they
+do not alter database configuration or the consumer queries.
 
 `make reset` (or `bash scripts/reset.sh`) restores tracked consumers and the
 report spec from HEAD, removes prior capture files, and captures fresh baseline

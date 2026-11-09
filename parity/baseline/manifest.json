@@ -1,12 +1,401 @@
 {
-  "captured_at": "2026-11-09T15:40:31.278609+00:00",
-  "source_filter": "redshift",
+  "captured_at": "2026-11-09T16:43:48.878557+00:00",
+  "source_filter": "all",
   "entries": [
+    {
+      "id": "measure_total_sales_excl_tax",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 1.4743,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "29c5d081f7ebb8a9079aeeb0e4ce463403909b808496f7c1b2cc7c017ff59d8d",
+      "file": "measure_total_sales_excl_tax.csv"
+    },
+    {
+      "id": "visual_total_sales_excl_tax",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 1.103113,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "29c5d081f7ebb8a9079aeeb0e4ce463403909b808496f7c1b2cc7c017ff59d8d",
+      "file": "visual_total_sales_excl_tax.csv"
+    },
+    {
+      "id": "measure_total_profit",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 1.411256,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "3e563f5fb98d0c563cca13e977c402016c203b078618f43afb14114f97403713",
+      "file": "measure_total_profit.csv"
+    },
+    {
+      "id": "visual_total_profit",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 1.869128,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "3e563f5fb98d0c563cca13e977c402016c203b078618f43afb14114f97403713",
+      "file": "visual_total_profit.csv"
+    },
+    {
+      "id": "measure_profit_margin",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 0.82146,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "56219a6a578c4b69af6d7e7813506e4356c4f2298a7737bb0542d5e0ad9f31d1",
+      "file": "measure_profit_margin.csv"
+    },
+    {
+      "id": "visual_profit_margin",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 1.641819,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "56219a6a578c4b69af6d7e7813506e4356c4f2298a7737bb0542d5e0ad9f31d1",
+      "file": "visual_profit_margin.csv"
+    },
+    {
+      "id": "measure_sales_yoy",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 1.809148,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "11a949e75f4be7efcc6cd14b1e6a2cdb1db335b8aee6817d5eecf8cc3ebed709",
+      "file": "measure_sales_yoy.csv"
+    },
+    {
+      "id": "visual_sales_yoy",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 0.932659,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "11a949e75f4be7efcc6cd14b1e6a2cdb1db335b8aee6817d5eecf8cc3ebed709",
+      "file": "visual_sales_yoy.csv"
+    },
+    {
+      "id": "measure_avg_order_value",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 1.227703,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "cdd146453f2fc97afb76262f74f98c455c4cbb9e41ebf95f06087bf35405ff73",
+      "file": "measure_avg_order_value.csv"
+    },
+    {
+      "id": "visual_avg_order_value",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 2.644715,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "cdd146453f2fc97afb76262f74f98c455c4cbb9e41ebf95f06087bf35405ff73",
+      "file": "visual_avg_order_value.csv"
+    },
+    {
+      "id": "measure_distinct_customers",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 0.561132,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "0e4b8dafc1d193d15a220aeeb5d5455db5f2bfd05a86fbc90fce29646afc9f14",
+      "file": "measure_distinct_customers.csv"
+    },
+    {
+      "id": "visual_distinct_customers",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 0.534296,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "0e4b8dafc1d193d15a220aeeb5d5455db5f2bfd05a86fbc90fce29646afc9f14",
+      "file": "visual_distinct_customers.csv"
+    },
+    {
+      "id": "measure_chiller_sales",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 1.077337,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "06a6775db4eaa5ac6038c333eb6c31fa7d3d40316c4d523ce9d6ab47cbfefa4b",
+      "file": "measure_chiller_sales.csv"
+    },
+    {
+      "id": "visual_chiller_sales",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 1.762183,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "06a6775db4eaa5ac6038c333eb6c31fa7d3d40316c4d523ce9d6ab47cbfefa4b",
+      "file": "visual_chiller_sales.csv"
+    },
+    {
+      "id": "measure_order_value",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 1.638685,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "1e10684edb98591552d3922cb3d95b486fff41eeae815aee62d703285316beaf",
+      "file": "measure_order_value.csv"
+    },
+    {
+      "id": "visual_order_value",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 1.551636,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "1e10684edb98591552d3922cb3d95b486fff41eeae815aee62d703285316beaf",
+      "file": "visual_order_value.csv"
+    },
+    {
+      "id": "measure_order_count",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 0.752297,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "3044c5335d4221cd7ee6da3b17686ba91a600e24462df9825fb2411fd440d856",
+      "file": "measure_order_count.csv"
+    },
+    {
+      "id": "visual_order_count",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 0.671976,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "3044c5335d4221cd7ee6da3b17686ba91a600e24462df9825fb2411fd440d856",
+      "file": "visual_order_count.csv"
+    },
+    {
+      "id": "measure_unpicked_lines",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 0.584759,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "6e437c632eb737bf7da3284db55dfa00298617dcdc6fab3bf3ed4fb0aac863a5",
+      "file": "measure_unpicked_lines.csv"
+    },
+    {
+      "id": "visual_unpicked_lines",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 0.586189,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "6e437c632eb737bf7da3284db55dfa00298617dcdc6fab3bf3ed4fb0aac863a5",
+      "file": "visual_unpicked_lines.csv"
+    },
+    {
+      "id": "api_customer_summary",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 0.569538,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "527364d06daf826bf96602ba47ffe0a5a6308e850787b65449bf82df5dc6c726",
+      "file": "api_customer_summary.csv",
+      "response_file": "api_customer_summary.json",
+      "response_sha256": "60c9a578cfd45d90301208a0f6eb340316253f44127b3b033ae7bc0a56d45e61"
+    },
+    {
+      "id": "api_monthly",
+      "source": "mssql",
+      "row_count": 5,
+      "query_seconds": 0.679513,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "e89f0b49385d771d54c85251bb273c2c171c8217cc7ba83d838415c0681b7302",
+      "file": "api_monthly.csv",
+      "response_file": "api_monthly.json",
+      "response_sha256": "d3b7ae9b54363903732dc3eb510f522bd5898e357d27fb23a31e27ba38cc06c3"
+    },
+    {
+      "id": "api_territory",
+      "source": "mssql",
+      "row_count": 9,
+      "query_seconds": 1.051219,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "c23727cef3b0cc2a29ce0e862cc6ee01fbce131797a25d2580b4a0c1465fe994",
+      "file": "api_territory.csv",
+      "response_file": "api_territory.json",
+      "response_sha256": "3cfe2142ea5989a21ba74ac0ac303549544d77261d59dd5624597741804e7317"
+    },
+    {
+      "id": "api_top_items",
+      "source": "mssql",
+      "row_count": 10,
+      "query_seconds": 0.904009,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "bb27d1a2f028aff28ef674d85797e68038ad7173bc5fb04055f8d4550620a91e",
+      "file": "api_top_items.csv",
+      "response_file": "api_top_items.json",
+      "response_sha256": "40972d955c8fc3408febc470b606c66fabc3456cf0df9e610f2170674695a92c"
+    },
+    {
+      "id": "api_health",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 0.498201,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "7ca1f6b16fab69f6bbb907dac66576fd21a4d32e0f9bf100ea44d83d023cf3f6",
+      "file": "api_health.csv",
+      "response_file": "api_health.json",
+      "response_sha256": "d37208a9be5dfe712a7ee54fdce2f1b0a006ec021754f2c3b70e2d55d6fb585e"
+    },
+    {
+      "id": "notebook_monthly_sales",
+      "source": "mssql",
+      "row_count": 41,
+      "query_seconds": 1.118687,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "a2ce50aa1b32be769692153a08fb970c3de38e112d035a4458086aef270dad11",
+      "file": "notebook_monthly_sales.csv"
+    },
+    {
+      "id": "finance_monthly_sales",
+      "source": "mssql",
+      "row_count": 41,
+      "query_seconds": 1.287152,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "a2ce50aa1b32be769692153a08fb970c3de38e112d035a4458086aef270dad11",
+      "file": "finance_monthly_sales.csv"
+    },
+    {
+      "id": "finance_customer_profit",
+      "source": "mssql",
+      "row_count": 20,
+      "query_seconds": 0.971086,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "3180aa33e6150a26421112cfdffeb1905b7e8f8b5a7a2e981a97aaae131deed1",
+      "file": "finance_customer_profit.csv"
+    },
+    {
+      "id": "tableau_regional_sales",
+      "source": "mssql",
+      "row_count": 9,
+      "query_seconds": 1.445073,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "8e40a4b486c066f213abc18d347d3b182d240cc6d0fb2141e4681d53dc73f1ff",
+      "file": "tableau_regional_sales.csv"
+    },
+    {
+      "id": "tableau_leading_customers",
+      "source": "mssql",
+      "row_count": 20,
+      "query_seconds": 0.83268,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "7eebbf2087724d2932f0799f92f43bf90dc9f5058f1cbc09f0e2ca0ea319876c",
+      "file": "tableau_leading_customers.csv"
+    },
+    {
+      "id": "tableau_regional_targets",
+      "source": "mssql",
+      "row_count": 9,
+      "query_seconds": 1.277721,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "cfe8487b29d36f1f7c48b128248f43e31a2bc99ae1259c7a9f7ea5a6bf448e16",
+      "file": "tableau_regional_targets.csv"
+    },
+    {
+      "id": "tableau_regional_sales_overview",
+      "source": "mssql",
+      "row_count": 38,
+      "query_seconds": 1.694011,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "7d5f5d8d31c6e88d9f4d012d88b5ec2849d11872e8f36fd2f5ad4f0e7bf909fb",
+      "file": "tableau_regional_sales_overview.csv"
+    },
+    {
+      "id": "tableau_regional_sales_value_vs_target",
+      "source": "mssql",
+      "row_count": 9,
+      "query_seconds": 1.058378,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "cfe8487b29d36f1f7c48b128248f43e31a2bc99ae1259c7a9f7ea5a6bf448e16",
+      "file": "tableau_regional_sales_value_vs_target.csv"
+    },
+    {
+      "id": "tableau_regional_sales_above_target",
+      "source": "mssql",
+      "row_count": 9,
+      "query_seconds": 1.031829,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "cee52fbf029664036db74f8c68f5ceeb9fecbae36037f4246a366b24fac85dec",
+      "file": "tableau_regional_sales_above_target.csv"
+    },
+    {
+      "id": "tableau_regional_sales_share_of_total",
+      "source": "mssql",
+      "row_count": 9,
+      "query_seconds": 1.975805,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "ba15f2109f78569ce3ad6aee4123a47da2d4b7a2859b7a929b242305d17c0469",
+      "file": "tableau_regional_sales_share_of_total.csv"
+    },
+    {
+      "id": "tableau_order_pipeline",
+      "source": "mssql",
+      "row_count": 41,
+      "query_seconds": 1.614943,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "5b952585f0843d597a7267cc8fa88dcc2553ae8f2d5499e71e7daf98dfb85d2c",
+      "file": "tableau_order_pipeline.csv"
+    },
+    {
+      "id": "tableau_unpicked_pipeline",
+      "source": "mssql",
+      "row_count": 41,
+      "query_seconds": 1.898224,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "4a170b260eb9c8fcd205138aac58644ca36c9026f4ffc20d92658fac6b0537d9",
+      "file": "tableau_unpicked_pipeline.csv"
+    },
+    {
+      "id": "tableau_order_target_coverage",
+      "source": "mssql",
+      "row_count": 41,
+      "query_seconds": 1.286436,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "0965d8c24913bdfca99f5409f25b1ef98583f7ab82a79f171141e9546156321e",
+      "file": "tableau_order_target_coverage.csv"
+    },
+    {
+      "id": "tableau_order_pipeline_overview",
+      "source": "mssql",
+      "row_count": 123,
+      "query_seconds": 3.192507,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "e8a030060241b1240d663fcfe58b863538e69632181aa0e69b6c9aef3e1e98bf",
+      "file": "tableau_order_pipeline_overview.csv"
+    },
+    {
+      "id": "tableau_order_pipeline_value_vs_target",
+      "source": "mssql",
+      "row_count": 41,
+      "query_seconds": 1.172669,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "0965d8c24913bdfca99f5409f25b1ef98583f7ab82a79f171141e9546156321e",
+      "file": "tableau_order_pipeline_value_vs_target.csv"
+    },
+    {
+      "id": "tableau_order_pipeline_above_target",
+      "source": "mssql",
+      "row_count": 41,
+      "query_seconds": 1.545233,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "c31e4fb9c5c4ad2a8b7095e1f8fe4132bffa3f12dd62d2f90347b7424a5f28c4",
+      "file": "tableau_order_pipeline_above_target.csv"
+    },
+    {
+      "id": "tableau_order_pipeline_share_of_total",
+      "source": "mssql",
+      "row_count": 41,
+      "query_seconds": 1.794106,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "c11fe51691f9575f856bdb3be0a84e0ef3cba2095f93816bdae9304e5e60bfbb",
+      "file": "tableau_order_pipeline_share_of_total.csv"
+    },
     {
       "id": "tableau_retail_channels",
       "source": "redshift",
       "row_count": 4,
-      "captured_at": "2026-11-09T15:40:31.278609+00:00",
+      "query_seconds": 2.035735,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
       "sha256": "2ae3da6ddd483e0438b55bca1062f5d7e0870f596b16880692949acbaf2fbbdf",
       "file": "tableau_retail_channels.csv"
     },
@@ -14,7 +403,8 @@
       "id": "tableau_retail_monthly_trend",
       "source": "redshift",
       "row_count": 12,
-      "captured_at": "2026-11-09T15:40:31.278609+00:00",
+      "query_seconds": 1.909233,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
       "sha256": "adf80eb56dcf9173215a63397daed0940292c25889e8b94bbe03b66898aedabd",
       "file": "tableau_retail_monthly_trend.csv"
     },
@@ -22,7 +412,8 @@
       "id": "tableau_channel_target_coverage",
       "source": "redshift",
       "row_count": 4,
-      "captured_at": "2026-11-09T15:40:31.278609+00:00",
+      "query_seconds": 1.973575,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
       "sha256": "6a740c04a84756587673847fe8a0da60db81a4af00f5a5815747ac350b688e3f",
       "file": "tableau_channel_target_coverage.csv"
     },
@@ -30,7 +421,8 @@
       "id": "tableau_retail_channels_overview",
       "source": "redshift",
       "row_count": 20,
-      "captured_at": "2026-11-09T15:40:31.278609+00:00",
+      "query_seconds": 1.963501,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
       "sha256": "3910f413731d63d78b153ee7b65b7450c921275137cd6b946831d18b868a0548",
       "file": "tableau_retail_channels_overview.csv"
     },
@@ -38,7 +430,8 @@
       "id": "tableau_retail_channels_value_vs_target",
       "source": "redshift",
       "row_count": 4,
-      "captured_at": "2026-11-09T15:40:31.278609+00:00",
+      "query_seconds": 1.949295,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
       "sha256": "6a740c04a84756587673847fe8a0da60db81a4af00f5a5815747ac350b688e3f",
       "file": "tableau_retail_channels_value_vs_target.csv"
     },
@@ -46,7 +439,8 @@
       "id": "tableau_retail_channels_above_target",
       "source": "redshift",
       "row_count": 4,
-      "captured_at": "2026-11-09T15:40:31.278609+00:00",
+      "query_seconds": 1.940702,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
       "sha256": "6509e8c4b3a2f7863aae34c1b8776aa36c69a46196314844de91a6ae46ff7f83",
       "file": "tableau_retail_channels_above_target.csv"
     },
@@ -54,9 +448,111 @@
       "id": "tableau_retail_channels_share_of_total",
       "source": "redshift",
       "row_count": 4,
-      "captured_at": "2026-11-09T15:40:31.278609+00:00",
+      "query_seconds": 2.146203,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
       "sha256": "0e9a2ed0e6710938bb5c55a99d9b7e429025e5e7258dac7aa966a0ad7449a678",
       "file": "tableau_retail_channels_share_of_total.csv"
+    },
+    {
+      "id": "measure_top_stock_item_sales",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 2.135023,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "df387965c7c33dc12d182facd978d6a67da3e981d2792b17e93bbda79fd3edd0",
+      "file": "measure_top_stock_item_sales.csv"
+    },
+    {
+      "id": "column_sales_band",
+      "source": "mssql",
+      "row_count": 228265,
+      "query_seconds": 2.08325,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "99afd05f5c6ff5b4444ec53644b3c28268c43b6f865c8e9dedce6bbba4d16083",
+      "file": "column_sales_band.csv"
+    },
+    {
+      "id": "visual_sales_by_territory",
+      "source": "mssql",
+      "row_count": 9,
+      "query_seconds": 1.018256,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "8e40a4b486c066f213abc18d347d3b182d240cc6d0fb2141e4681d53dc73f1ff",
+      "file": "visual_sales_by_territory.csv"
+    },
+    {
+      "id": "visual_sales_by_month",
+      "source": "mssql",
+      "row_count": 41,
+      "query_seconds": 1.04037,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "77eac064412d562af4303d623a67e371a3c295fb7700bbf1832bbb8e0b28c565",
+      "file": "visual_sales_by_month.csv"
+    },
+    {
+      "id": "visual_top_stock_items",
+      "source": "mssql",
+      "row_count": 10,
+      "query_seconds": 0.855513,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "1841f4d0cced30701f41bfeb1c97d42c344ed35c303e9a09974820fbc19be4ef",
+      "file": "visual_top_stock_items.csv"
+    },
+    {
+      "id": "visual_sales_by_buying_group",
+      "source": "mssql",
+      "row_count": 3,
+      "query_seconds": 1.004708,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "09071400dd197f0c34d2b676895000fdcb61d189cbad28ae5fbf605215db6991",
+      "file": "visual_sales_by_buying_group.csv"
+    },
+    {
+      "id": "measure_stock_on_hand",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 0.693275,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "41bf1a5f1dfcc5106c51d2112a58c78e0020e2c69eb8e8220fe02014c177d003",
+      "file": "measure_stock_on_hand.csv"
+    },
+    {
+      "id": "visual_stock_on_hand",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 0.539397,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "41bf1a5f1dfcc5106c51d2112a58c78e0020e2c69eb8e8220fe02014c177d003",
+      "file": "visual_stock_on_hand.csv"
+    },
+    {
+      "id": "measure_items_below_reorder",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 0.528964,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "2bb5ffa520e4bbe57b59ddc8f4a2bcc31e9d0c5fb2b261c7fd77721278f5a8c8",
+      "file": "measure_items_below_reorder.csv"
+    },
+    {
+      "id": "visual_items_below_reorder",
+      "source": "mssql",
+      "row_count": 1,
+      "query_seconds": 0.521612,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "2bb5ffa520e4bbe57b59ddc8f4a2bcc31e9d0c5fb2b261c7fd77721278f5a8c8",
+      "file": "visual_items_below_reorder.csv"
+    },
+    {
+      "id": "api_customer_orders",
+      "source": "mssql",
+      "row_count": 20,
+      "query_seconds": 0.547577,
+      "captured_at": "2026-11-09T16:43:48.878557+00:00",
+      "sha256": "1bf067741a95512bfdd9def9c4536749db55306551cca2378f6a2c8f43a047fa",
+      "file": "api_customer_orders.csv",
+      "response_file": "api_customer_orders.json",
+      "response_sha256": "d1481c08acfba53be43b018863b8d1b76095a9e5ce8f0b08dac2a3806de61982"
     }
   ]
 }

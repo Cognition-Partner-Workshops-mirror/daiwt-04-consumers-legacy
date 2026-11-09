@@ -1,0 +1,142 @@
+[
+  {
+    "order_date": "2015-09-09",
+    "order_id": 56788,
+    "order_value": 751.0,
+    "quantity": 30,
+    "unpicked_lines": 0
+  },
+  {
+    "order_date": "2015-09-18",
+    "order_id": 57404,
+    "order_value": 9676.5,
+    "quantity": 371,
+    "unpicked_lines": 0
+  },
+  {
+    "order_date": "2015-10-08",
+    "order_id": 58626,
+    "order_value": 517.4,
+    "quantity": 161,
+    "unpicked_lines": 0
+  },
+  {
+    "order_date": "2015-10-08",
+    "order_id": 58654,
+    "order_value": 3951.0,
+    "quantity": 126,
+    "unpicked_lines": 0
+  },
+  {
+    "order_date": "2015-10-12",
+    "order_id": 58875,
+    "order_value": 2096.0,
+    "quantity": 301,
+    "unpicked_lines": 0
+  },
+  {
+    "order_date": "2015-10-12",
+    "order_id": 58896,
+    "order_value": 621.6,
+    "quantity": 168,
+    "unpicked_lines": 1
+  },
+  {
+    "order_date": "2015-10-20",
+    "order_id": 59412,
+    "order_value": 12399.6,
+    "quantity": 328,
+    "unpicked_lines": 0
+  },
+  {
+    "order_date": "2015-10-20",
+    "order_id": 59445,
+    "order_value": 2480.0,
+    "quantity": 130,
+    "unpicked_lines": 0
+  },
+  {
+    "order_date": "2015-11-04",
+    "order_id": 60434,
+    "order_value": 602.0,
+    "quantity": 20,
+    "unpicked_lines": 0
+  },
+  {
+    "order_date": "2015-11-23",
+    "order_id": 61627,
+    "order_value": 969.0,
+    "quantity": 241,
+    "unpicked_lines": 0
+  },
+  {
+    "order_date": "2015-11-23",
+    "order_id": 61637,
+    "order_value": 1728.0,
+    "quantity": 96,
+    "unpicked_lines": 1
+  },
+  {
+    "order_date": "2015-12-01",
+    "order_id": 62054,
+    "order_value": 302.6,
+    "quantity": 55,
+    "unpicked_lines": 0
+  },
+  {
+    "order_date": "2016-01-18",
+    "order_id": 65109,
+    "order_value": 973.8,
+    "quantity": 108,
+    "unpicked_lines": 0
+  },
+  {
+    "order_date": "2016-01-25",
+    "order_id": 65562,
+    "order_value": 2748.0,
+    "quantity": 86,
+    "unpicked_lines": 0
+  },
+  {
+    "order_date": "2016-01-26",
+    "order_id": 65642,
+    "order_value": 1137.9,
+    "quantity": 201,
+    "unpicked_lines": 0
+  },
+  {
+    "order_date": "2016-02-05",
+    "order_id": 66237,
+    "order_value": 562.0,
+    "quantity": 19,
+    "unpicked_lines": 0
+  },
+  {
+    "order_date": "2016-02-06",
+    "order_id": 66278,
+    "order_value": 2760.0,
+    "quantity": 140,
+    "unpicked_lines": 0
+  },
+  {
+    "order_date": "2016-04-26",
+    "order_id": 71128,
+    "order_value": 830.4,
+    "quantity": 132,
+    "unpicked_lines": 0
+  },
+  {
+    "order_date": "2016-04-28",
+    "order_id": 71296,
+    "order_value": 615.0,
+    "quantity": 16,
+    "unpicked_lines": 0
+  },
+  {
+    "order_date": "2016-05-27",
+    "order_id": 73290,
+    "order_value": 2200.0,
+    "quantity": 70,
+    "unpicked_lines": 0
+  }
+]

@@ -28,6 +28,7 @@ table 'Date'
 			let
 				Source = Sql.Database(Server, Database),
 				Data = Source{[Schema="Dimension", Item="Date"]}[Data],
-				Selected = Table.SelectColumns(Data, {"Date", "Calendar Year", "Calendar Month Number", "Beginning of Month"})
+				WithMonth = Table.AddColumn(Data, "Beginning of Month", each Date.StartOfMonth([Date]), type date),
+				Selected = Table.SelectColumns(WithMonth, {"Date", "Calendar Year", "Calendar Month Number", "Beginning of Month"})
 			in
 				Selected

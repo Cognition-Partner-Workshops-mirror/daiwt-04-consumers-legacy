@@ -8,6 +8,7 @@ import os
 import re
 import sys
 import time
+from contextlib import closing
 from datetime import datetime, timezone
 from decimal import Decimal
 from pathlib import Path
@@ -22,12 +23,21 @@ from consumers.api import db
 from consumers.api.main import app
 
 
-def redshift_rows(sql):
+def mssql_rows(sql, query_timeout):
+    with closing(db.connect()) as connection:
+        connection.timeout = query_timeout
+        with closing(connection.cursor()) as cursor:
+            cursor.execute(sql)
+            columns = [column[0] for column in cursor.description]
+            return [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+
+def redshift_rows(sql, query_timeout=300):
     client = boto3.client('redshift-data', region_name=os.getenv('AWS_REGION', 'us-east-1'))
     statement = client.execute_statement(
         SecretArn=os.environ['REDSHIFT_SECRET_ARN'], WorkgroupName=os.environ['REDSHIFT_WORKGROUP'],
         Database=os.environ['REDSHIFT_DATABASE'], Sql=sql)['Id']
-    deadline = time.monotonic() + 300
+    deadline = time.monotonic() + query_timeout
     while True:
         status = client.describe_statement(Id=statement)
         if status['Status'] == 'FINISHED':
@@ -35,7 +45,8 @@ def redshift_rows(sql):
         if status['Status'] in ('FAILED', 'ABORTED'):
             raise RuntimeError(status.get('Error', status['Status']))
         if time.monotonic() > deadline:
-            raise TimeoutError('Redshift statement exceeded five minutes')
+            client.cancel_statement(Id=statement)
+            raise TimeoutError('Redshift statement exceeded query timeout')
         time.sleep(1)
     rows = []
     for page in client.get_paginator('get_statement_result').paginate(Id=statement):
@@ -77,9 +88,11 @@ def csv_bytes(rows, keys):
     return output.getvalue().encode('utf-8')
 
 
-def capture(spec, destination, source='all'):
+def capture(spec, destination, source='all', query_timeout=120):
     if source not in ('all', 'mssql', 'redshift'):
         raise ValueError('Unknown baseline source')
+    if query_timeout <= 0:
+        raise ValueError('Query timeout must be positive')
     destination.mkdir(parents=True, exist_ok=True)
     manifest = {'captured_at': datetime.now(timezone.utc).isoformat(), 'source_filter': source, 'entries': []}
     with TestClient(app) as api:
@@ -89,13 +102,17 @@ def capture(spec, destination, source='all'):
             if not re.fullmatch(r'[a-z0-9_]+', item['id']):
                 raise ValueError('Invalid report identifier')
             sql = item['sql'].strip()
-            if not sql.upper().startswith('SELECT ') or ';' in sql:
+            if (not re.match(r'^(SELECT|WITH)\b', sql, re.IGNORECASE) or ';' in sql
+                    or re.search(r'\b(INSERT|UPDATE|DELETE|MERGE|DROP|ALTER|CREATE|EXEC|EXECUTE|INTO|TRUNCATE|GRANT|REVOKE|DENY)\b', sql, re.IGNORECASE)):
                 raise ValueError('Only a single SELECT is supported')
-            rows = db.fetch(sql) if item['source'] == 'mssql' else redshift_rows(sql)
+            started = time.monotonic()
+            rows = mssql_rows(sql, query_timeout) if item['source'] == 'mssql' else redshift_rows(sql, query_timeout)
+            query_seconds = time.monotonic() - started
             data = csv_bytes(rows, item['keys'])
             file = destination / (item['id'] + '.csv')
             file.write_bytes(data)
             record = {'id': item['id'], 'source': item['source'], 'row_count': len(rows),
+                      'query_seconds': round(query_seconds, 6),
                       'captured_at': manifest['captured_at'], 'sha256': hashlib.sha256(data).hexdigest(),
                       'file': file.name}
             if item['kind'] == 'endpoint':
@@ -112,6 +129,7 @@ def capture(spec, destination, source='all'):
                 record['response_file'] = json_file.name
                 record['response_sha256'] = hashlib.sha256(body).hexdigest()
             manifest['entries'].append(record)
+            print(f"{item['id']}: {len(rows)} rows, {record['query_seconds']:.3f}s", flush=True)
     (destination / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
     return manifest
 
@@ -121,6 +139,9 @@ if __name__ == '__main__':
     parser.add_argument('--spec', type=Path, default=ROOT / 'parity/report_spec.yaml')
     parser.add_argument('--source', choices=('redshift', 'mssql', 'all'), default='all',
                         help='Capture only this source (default: all)')
+    parser.add_argument('--query-timeout', type=int, default=120,
+                        help='Maximum execution seconds per source query (default: 120)')
     args = parser.parse_args()
-    result = capture(yaml.safe_load(args.spec.read_text()), ROOT / 'parity/baseline', source=args.source)
+    result = capture(yaml.safe_load(args.spec.read_text()), ROOT / 'parity/baseline',
+                     source=args.source, query_timeout=args.query_timeout)
     print(f"Captured {len(result['entries'])} report entries")

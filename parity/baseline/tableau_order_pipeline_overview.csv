@@ -1,0 +1,124 @@
+label,tile_name,value
+2013-01,Order Pipeline,3824842.85
+2013-02,Order Pipeline,2821282.20
+2013-03,Order Pipeline,3966078.10
+2013-04,Order Pipeline,4155710.05
+2013-05,Order Pipeline,4562830.35
+2013-06,Order Pipeline,4150098.60
+2013-07,Order Pipeline,4502741.85
+2013-08,Order Pipeline,3601220.60
+2013-09,Order Pipeline,3916003.25
+2013-10,Order Pipeline,3879872.45
+2013-11,Order Pipeline,3819809.10
+2013-12,Order Pipeline,3728103.40
+2014-01,Order Pipeline,4202578.80
+2014-02,Order Pipeline,3572744.40
+2014-03,Order Pipeline,3955257.55
+2014-04,Order Pipeline,4212856.25
+2014-05,Order Pipeline,4753224.10
+2014-06,Order Pipeline,4427573.80
+2014-07,Order Pipeline,4919791.85
+2014-08,Order Pipeline,4197257.40
+2014-09,Order Pipeline,3973877.85
+2014-10,Order Pipeline,4606478.45
+2014-11,Order Pipeline,4157270.55
+2014-12,Order Pipeline,4513092.40
+2015-01,Order Pipeline,4556065.25
+2015-02,Order Pipeline,4307819.25
+2015-03,Order Pipeline,4644642.35
+2015-04,Order Pipeline,5222594.85
+2015-05,Order Pipeline,4636628.45
+2015-06,Order Pipeline,4696866.65
+2015-07,Order Pipeline,5339212.00
+2015-08,Order Pipeline,4070526.60
+2015-09,Order Pipeline,4841896.70
+2015-10,Order Pipeline,4653840.90
+2015-11,Order Pipeline,4240612.30
+2015-12,Order Pipeline,4607182.15
+2016-01,Order Pipeline,4612140.45
+2016-02,Order Pipeline,4099480.35
+2016-03,Order Pipeline,4807110.70
+2016-04,Order Pipeline,4739058.60
+2016-05,Order Pipeline,5138002.65
+2013-01,Order Target Coverage,38.25
+2013-02,Order Target Coverage,28.21
+2013-03,Order Target Coverage,39.66
+2013-04,Order Target Coverage,41.56
+2013-05,Order Target Coverage,45.63
+2013-06,Order Target Coverage,41.50
+2013-07,Order Target Coverage,45.03
+2013-08,Order Target Coverage,36.01
+2013-09,Order Target Coverage,39.16
+2013-10,Order Target Coverage,38.80
+2013-11,Order Target Coverage,38.20
+2013-12,Order Target Coverage,37.28
+2014-01,Order Target Coverage,42.03
+2014-02,Order Target Coverage,35.73
+2014-03,Order Target Coverage,39.55
+2014-04,Order Target Coverage,42.13
+2014-05,Order Target Coverage,47.53
+2014-06,Order Target Coverage,44.28
+2014-07,Order Target Coverage,49.20
+2014-08,Order Target Coverage,41.97
+2014-09,Order Target Coverage,39.74
+2014-10,Order Target Coverage,46.06
+2014-11,Order Target Coverage,41.57
+2014-12,Order Target Coverage,45.13
+2015-01,Order Target Coverage,45.56
+2015-02,Order Target Coverage,43.08
+2015-03,Order Target Coverage,46.45
+2015-04,Order Target Coverage,52.23
+2015-05,Order Target Coverage,46.37
+2015-06,Order Target Coverage,46.97
+2015-07,Order Target Coverage,53.39
+2015-08,Order Target Coverage,40.71
+2015-09,Order Target Coverage,48.42
+2015-10,Order Target Coverage,46.54
+2015-11,Order Target Coverage,42.41
+2015-12,Order Target Coverage,46.07
+2016-01,Order Target Coverage,46.12
+2016-02,Order Target Coverage,40.99
+2016-03,Order Target Coverage,48.07
+2016-04,Order Target Coverage,47.39
+2016-05,Order Target Coverage,51.38
+2013-01,Unpicked Pipeline,8.00
+2013-02,Unpicked Pipeline,18.00
+2013-03,Unpicked Pipeline,25.00
+2013-04,Unpicked Pipeline,28.00
+2013-05,Unpicked Pipeline,48.00
+2013-06,Unpicked Pipeline,33.00
+2013-07,Unpicked Pipeline,38.00
+2013-08,Unpicked Pipeline,47.00
+2013-09,Unpicked Pipeline,53.00
+2013-10,Unpicked Pipeline,52.00
+2013-11,Unpicked Pipeline,47.00
+2013-12,Unpicked Pipeline,45.00
+2014-01,Unpicked Pipeline,56.00
+2014-02,Unpicked Pipeline,46.00
+2014-03,Unpicked Pipeline,45.00
+2014-04,Unpicked Pipeline,68.00
+2014-05,Unpicked Pipeline,79.00
+2014-06,Unpicked Pipeline,82.00
+2014-07,Unpicked Pipeline,67.00
+2014-08,Unpicked Pipeline,60.00
+2014-09,Unpicked Pipeline,57.00
+2014-10,Unpicked Pipeline,80.00
+2014-11,Unpicked Pipeline,71.00
+2014-12,Unpicked Pipeline,90.00
+2015-01,Unpicked Pipeline,78.00
+2015-02,Unpicked Pipeline,66.00
+2015-03,Unpicked Pipeline,78.00
+2015-04,Unpicked Pipeline,96.00
+2015-05,Unpicked Pipeline,104.00
+2015-06,Unpicked Pipeline,110.00
+2015-07,Unpicked Pipeline,127.00
+2015-08,Unpicked Pipeline,85.00
+2015-09,Unpicked Pipeline,114.00
+2015-10,Unpicked Pipeline,118.00
+2015-11,Unpicked Pipeline,127.00
+2015-12,Unpicked Pipeline,127.00
+2016-01,Unpicked Pipeline,134.00
+2016-02,Unpicked Pipeline,103.00
+2016-03,Unpicked Pipeline,130.00
+2016-04,Unpicked Pipeline,139.00
+2016-05,Unpicked Pipeline,168.00

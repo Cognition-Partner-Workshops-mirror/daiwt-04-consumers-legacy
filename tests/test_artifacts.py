@@ -74,13 +74,22 @@ def test_model_expansion():
     assert len(re.findall(r"\tmeasure '([^']+)' =", holding)) == 2
 
 
+def test_month_start_is_derived():
+    date = (ROOT / 'consumers/powerbi/Sales Performance.SemanticModel/definition/tables/Date.tmdl').read_text()
+    assert 'Table.AddColumn(Data, "Beginning of Month", each Date.StartOfMonth([Date]), type date)' in date
+    assert 'Table.SelectColumns(WithMonth,' in date
+    sql = next(entry['sql'] for entry in SPEC if entry['id'] == 'visual_sales_by_month')
+    assert 'DATEFROMPARTS(d.[Calendar Year],d.[Calendar Month Number],1)' in sql
+    assert 'd.[Beginning of Month]' not in sql
+
+
 def test_spec_integrity():
     ids = [e['id'] for e in SPEC]
     assert len(ids) == len(set(ids))
     for entry in SPEC:
         assert re.fullmatch('[a-z0-9_]+', entry['id'])
         assert (ROOT / entry['source_file']).is_file()
-        assert entry['sql'].startswith('SELECT ')
+        assert entry['sql'].startswith(('SELECT ', 'WITH '))
         assert entry['source'] in ('mssql', 'redshift')
         assert entry['grain'] and isinstance(entry['keys'], list)
         assert entry['numeric_tolerance']['absolute'] >= 0

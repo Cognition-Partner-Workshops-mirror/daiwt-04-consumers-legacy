@@ -24,6 +24,37 @@ def connection(monkeypatch):
     return conn, cursor
 
 
+@pytest.mark.parametrize('toggle,expected', [(None, 'no'), ('no', 'no'), ('yes', 'yes')])
+def test_connection_certificate_toggle(monkeypatch, toggle, expected):
+    for key, value in {'MSSQL_HOST': 'warehouse.example', 'MSSQL_USER': 'reader', 'MSSQL_PASSWORD': 'test-password'}.items():
+        monkeypatch.setenv(key, value)
+    monkeypatch.delenv('MSSQL_TRUST_SERVER_CERTIFICATE', raising=False)
+    if toggle is not None:
+        monkeypatch.setenv('MSSQL_TRUST_SERVER_CERTIFICATE', toggle)
+    connect_mock = MagicMock()
+    monkeypatch.setattr(db.pyodbc, 'connect', connect_mock)
+    db.connect()
+    connection_string = connect_mock.call_args.args[0]
+    assert f'TrustServerCertificate={{{expected}}}' in connection_string
+    assert 'Encrypt={yes}' in connection_string
+    assert connect_mock.return_value.timeout == 120
+
+
+def test_connection_query_timeout(monkeypatch):
+    for key, value in {'MSSQL_HOST': 'warehouse.example', 'MSSQL_USER': 'reader', 'MSSQL_PASSWORD': 'test-password',
+                       'MSSQL_QUERY_TIMEOUT_SECONDS': '23'}.items():
+        monkeypatch.setenv(key, value)
+    connect_mock = MagicMock()
+    monkeypatch.setattr(db.pyodbc, 'connect', connect_mock)
+    assert db.connect().timeout == 23
+
+
+def test_invalid_certificate_toggle(monkeypatch):
+    monkeypatch.setenv('MSSQL_TRUST_SERVER_CERTIFICATE', 'invalid')
+    with pytest.raises(ValueError, match='must be yes or no'):
+        db.connect()
+
+
 @pytest.mark.parametrize('path,params', [
     ('/customers/1/summary', (1,)), ('/kpis/monthly?year=2016', (2016, 2016)),
     ('/sales/by-territory?year=2016', (2016,)), ('/stock-items/top?limit=5', (5,)),

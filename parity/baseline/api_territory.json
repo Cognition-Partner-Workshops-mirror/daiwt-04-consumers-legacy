@@ -1,0 +1,38 @@
+[
+  {
+    "sales": 288284.7,
+    "territory": "External"
+  },
+  {
+    "sales": 2430359.55,
+    "territory": "Far West"
+  },
+  {
+    "sales": 2870775.9,
+    "territory": "Great Lakes"
+  },
+  {
+    "sales": 3406756.15,
+    "territory": "Mideast"
+  },
+  {
+    "sales": 1261948.85,
+    "territory": "New England"
+  },
+  {
+    "sales": 3040291.8,
+    "territory": "Plains"
+  },
+  {
+    "sales": 1416006.4,
+    "territory": "Rocky Mountain"
+  },
+  {
+    "sales": 5093361.25,
+    "territory": "Southeast"
+  },
+  {
+    "sales": 2825390.95,
+    "territory": "Southwest"
+  }
+]

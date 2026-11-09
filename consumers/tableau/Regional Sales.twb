@@ -2,7 +2,7 @@
 <workbook original-version="18.1" source-build="2023.1.0" source-platform="win" version="18.1" xmlns:user="http://www.tableausoftware.com/xml/user"><preferences/><datasources>
 <datasource name="Parameters" hasconnection="false" inline="true" version="18.1"><column caption="Target Value" datatype="real" name="[Target Value]" param-domain-type="any" role="measure" type="quantitative" value="100000"><calculation class="tableau" formula="100000"/></column></datasource>
 <datasource caption="Regional Sales" inline="true" name="Reporting" version="18.1">
-<connection class="sqlserver" server="wwi-dw.corp.local" dbname="WideWorldImportersDW" authentication="prompt" port="1433">
+<connection class="sqlserver" server="daiwt-02-sqlserver.c0x4mes64o5e.us-east-1.rds.amazonaws.com" dbname="WideWorldImportersDW" authentication="prompt" port="1433">
 <relation name="ReportingQuery" type="text">SELECT TOP (100) c.[Sales Territory] AS territory, DATEPART(year,s.[Invoice Date Key]) AS sales_year, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory], DATEPART(year,s.[Invoice Date Key]) ORDER BY sales DESC, territory, sales_year</relation></connection>
 <column datatype="string" name="[territory]" role="dimension" type="nominal"/>
 <column datatype="integer" name="[sales_year]" role="dimension" type="nominal"/>
@@ -10,7 +10,7 @@
 <column caption="Above Target" datatype="real" name="[Above Target]" role="measure" type="quantitative"><calculation class="tableau" formula="IIF(ZN(SUM([sales])) >= [Parameters].[Target Value], 1, 0)"/></column>
 <column caption="Share of Total" datatype="real" name="[Share of Total]" role="measure" type="quantitative"><calculation class="tableau" formula="ZN(SUM([sales])) / MIN({FIXED : SUM([sales])})"/></column></datasource>
 <datasource caption="Regional Sales Customers" inline="true" name="CustomerRanking" version="18.1">
-<connection class="sqlserver" server="wwi-dw.corp.local" dbname="WideWorldImportersDW" authentication="prompt" port="1433">
+<connection class="sqlserver" server="daiwt-02-sqlserver.c0x4mes64o5e.us-east-1.rds.amazonaws.com" dbname="WideWorldImportersDW" authentication="prompt" port="1433">
 <relation name="CustomerRankingQuery" type="text">SELECT TOP (20) c.[Customer Key] AS customer_key, c.[Customer] AS customer, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.Customer c ON s.[Customer Key]=c.[Customer Key] GROUP BY c.[Customer Key],c.[Customer] ORDER BY sales DESC, customer_key</relation></connection>
 <column datatype="integer" name="[customer_key]" role="measure" type="quantitative"/>
 <column datatype="string" name="[customer]" role="dimension" type="nominal"/>

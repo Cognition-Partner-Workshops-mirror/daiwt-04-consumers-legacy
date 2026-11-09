@@ -1,0 +1,52 @@
+[
+  {
+    "sales": 2871500.0,
+    "stock_item": "Void fill 400 L bag (White) 400L",
+    "stock_item_key": 1
+  },
+  {
+    "sales": 11107251.0,
+    "stock_item": "Air cushion machine (Blue)",
+    "stock_item_key": 5
+  },
+  {
+    "sales": 6384000.0,
+    "stock_item": "32 mm Anti static bubble wrap (Blue) 50m",
+    "stock_item_key": 47
+  },
+  {
+    "sales": 2900160.0,
+    "stock_item": "32 mm Anti static bubble wrap (Blue) 20m",
+    "stock_item_key": 48
+  },
+  {
+    "sales": 5795640.0,
+    "stock_item": "20 mm Anti static bubble wrap (Blue) 50m",
+    "stock_item_key": 50
+  },
+  {
+    "sales": 2468700.0,
+    "stock_item": "20 mm Anti static bubble wrap (Blue) 20m",
+    "stock_item_key": 51
+  },
+  {
+    "sales": 6329070.0,
+    "stock_item": "10 mm Anti static bubble wrap (Blue) 50m",
+    "stock_item_key": 53
+  },
+  {
+    "sales": 6190240.0,
+    "stock_item": "32 mm Double sided bubble wrap 50m",
+    "stock_item_key": 56
+  },
+  {
+    "sales": 6214320.0,
+    "stock_item": "20 mm Double sided bubble wrap 50m",
+    "stock_item_key": 59
+  },
+  {
+    "sales": 5943000.0,
+    "stock_item": "10 mm Double sided bubble wrap 50m",
+    "stock_item_key": 62
+  }
+]

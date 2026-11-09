@@ -26,7 +26,7 @@ def pick(mapping, *keys, default=None):
     raise ValueError('Connection secret is missing required field: ' + keys[0])
 values = {
     'AWS_REGION': os.environ['AWS_REGION'],
-    'MSSQL_HOST': os.getenv('MSSQL_HOST') or pick(sql, 'host', 'hostname', 'server', default='wwi-dw.corp.local'),
+    'MSSQL_HOST': os.getenv('MSSQL_HOST') or pick(sql, 'host', 'hostname', 'server', default='daiwt-02-sqlserver.c0x4mes64o5e.us-east-1.rds.amazonaws.com'),
     'MSSQL_PORT': pick(sql, 'port', default='1433'),
     'MSSQL_USER': pick(sql, 'username', 'user'),
     'MSSQL_PASSWORD': pick(sql, 'password'),

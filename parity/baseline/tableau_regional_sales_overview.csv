@@ -1,0 +1,39 @@
+label,tile_name,value
+"Tailspin Toys (Big Moose, NY)",Leading Customers,334587.15
+"Tailspin Toys (Buell, MO)",Leading Customers,337822.05
+"Tailspin Toys (Fieldbrook, CA)",Leading Customers,344005.05
+"Tailspin Toys (Good Hart, MI)",Leading Customers,339867.35
+"Tailspin Toys (Inguadona, MN)",Leading Customers,381585.35
+"Tailspin Toys (Long Meadow, MD)",Leading Customers,360901.50
+"Tailspin Toys (Maypearl, TX)",Leading Customers,339721.90
+"Tailspin Toys (Minidoka, ID)",Leading Customers,371822.30
+"Tailspin Toys (Sentinel Butte, ND)",Leading Customers,334970.00
+"Tailspin Toys (Vidrine, LA)",Leading Customers,340163.80
+Unknown,Leading Customers,63528695.70
+"Wingtip Toys (Cuyamungue, NM)",Leading Customers,353046.95
+"Wingtip Toys (Grabill, IN)",Leading Customers,351138.65
+"Wingtip Toys (Key Biscayne, FL)",Leading Customers,335053.55
+"Wingtip Toys (Morrison Bluff, AR)",Leading Customers,352287.20
+"Wingtip Toys (San Jacinto, CA)",Leading Customers,355293.35
+"Wingtip Toys (Sarversville, PA)",Leading Customers,365427.00
+"Wingtip Toys (Wapinitia, OR)",Leading Customers,343236.10
+"Wingtip Toys (Wapiti, WY)",Leading Customers,336411.00
+"Wingtip Toys (West Frostproof, FL)",Leading Customers,346621.45
+External,Regional Sales,2200138.60
+Far West,Regional Sales,19879592.80
+Great Lakes,Regional Sales,20153233.85
+Mideast,Regional Sales,25758309.30
+New England,Regional Sales,7696054.80
+Plains,Regional Sales,23307175.85
+Rocky Mountain,Regional Sales,11076949.95
+Southeast,Regional Sales,38265165.75
+Southwest,Regional Sales,23924720.30
+External,Regional Targets,22.00
+Far West,Regional Targets,198.80
+Great Lakes,Regional Targets,201.53
+Mideast,Regional Targets,257.58
+New England,Regional Targets,76.96
+Plains,Regional Targets,233.07
+Rocky Mountain,Regional Targets,110.77
+Southeast,Regional Targets,382.65
+Southwest,Regional Targets,239.25

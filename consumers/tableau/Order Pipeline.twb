@@ -2,7 +2,7 @@
 <workbook original-version="18.1" source-build="2023.1.0" source-platform="win" version="18.1" xmlns:user="http://www.tableausoftware.com/xml/user"><preferences/><datasources>
 <datasource name="Parameters" hasconnection="false" inline="true" version="18.1"><column caption="Target Value" datatype="real" name="[Target Value]" param-domain-type="any" role="measure" type="quantitative" value="100000"><calculation class="tableau" formula="100000"/></column></datasource>
 <datasource caption="Order Pipeline" inline="true" name="Reporting" version="18.1">
-<connection class="sqlserver" server="wwi-dw.corp.local" dbname="WideWorldImportersDW" authentication="prompt" port="1433">
+<connection class="sqlserver" server="daiwt-02-sqlserver.c0x4mes64o5e.us-east-1.rds.amazonaws.com" dbname="WideWorldImportersDW" authentication="prompt" port="1433">
 <relation name="ReportingQuery" type="text">SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, ISNULL(SUM([Total Excluding Tax]),0) AS order_value, COUNT_BIG(*) AS order_lines, SUM(CASE WHEN [Picked Date Key] IS NULL THEN 1 ELSE 0 END) AS unpicked_lines FROM Fact.[Order] WHERE [Order Date Key] >= DATEFROMPARTS(2013,1,1) GROUP BY CONVERT(char(7),[Order Date Key],120)</relation></connection>
 <column datatype="string" name="[order_month]" role="dimension" type="nominal"/>
 <column datatype="real" name="[order_value]" role="measure" type="quantitative"/>
