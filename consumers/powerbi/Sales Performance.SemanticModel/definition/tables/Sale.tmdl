@@ -1,0 +1,72 @@
+table 'Sale'
+
+	measure 'Total Sales Excl Tax' = SUM('Sale'[Total Excluding Tax])
+		formatString: #,0.00
+
+	measure 'Total Profit' = SUM('Sale'[Profit])
+		formatString: #,0.00
+
+	measure 'Profit Margin %' = DIVIDE([Total Profit], [Total Sales Excl Tax])
+		formatString: 0.00%
+
+	measure 'Sales YoY %' = VAR PriorSales = CALCULATE([Total Sales Excl Tax], SAMEPERIODLASTYEAR('Date'[Date])) RETURN DIVIDE([Total Sales Excl Tax] - PriorSales, PriorSales)
+		formatString: 0.00%
+
+	measure 'Avg Order Value' = DIVIDE([Total Sales Excl Tax], DISTINCTCOUNT('Sale'[WWI Invoice ID]))
+		formatString: #,0.00
+
+	measure 'Distinct Customers' = DISTINCTCOUNT('Sale'[Customer Key])
+		formatString: #,0.00
+
+	measure 'Chiller Sales' = CALCULATE([Total Sales Excl Tax], 'Sale'[Total Chiller Items] > 0)
+		formatString: #,0.00
+
+	column 'Sale Key'
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: Sale Key
+
+	column 'Customer Key'
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: Customer Key
+
+	column 'City Key'
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: City Key
+
+	column 'Stock Item Key'
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: Stock Item Key
+
+	column 'Invoice Date Key'
+		dataType: dateTime
+		summarizeBy: none
+		sourceColumn: Invoice Date Key
+
+	column 'Total Excluding Tax'
+		dataType: decimal
+		summarizeBy: none
+		sourceColumn: Total Excluding Tax
+
+	column 'Profit'
+		dataType: decimal
+		summarizeBy: none
+		sourceColumn: Profit
+
+	column 'WWI Invoice ID'
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: WWI Invoice ID
+
+	column 'Total Chiller Items'
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: Total Chiller Items
+
+	partition 'Sale' = m
+		mode: import
+		source =
+			Value.NativeQuery(Sql.Database(Server, Database), "SELECT [Sale Key], [Customer Key], [City Key], [Stock Item Key], [Invoice Date Key], [Total Excluding Tax], [Profit], [WWI Invoice ID], [Total Chiller Items] FROM [Fact].[Sale]", null, [EnableFolding=true])

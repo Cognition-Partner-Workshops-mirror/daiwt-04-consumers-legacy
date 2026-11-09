@@ -1,0 +1,48 @@
+{
+  "version": "5.55",
+  "config": "{}",
+  "layoutOptimization": 0,
+  "sections": [
+    {
+      "name": "Overview",
+      "displayName": "Order Fulfilment",
+      "displayOption": 1,
+      "width": 1280,
+      "height": 720,
+      "visualContainers": [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "width": 380,
+          "height": 200,
+          "config": "{\"name\":\"card0\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":0,\"width\":380,\"height\":200}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"Order.Order Value\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"order\",\"Entity\":\"Order\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"order\"}},\"Property\":\"Order Value\"},\"Name\":\"Order.Order Value\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "query": "{\"Commands\":[{\"SemanticQueryDataShapeCommand\":{\"Query\":{\"Version\":2,\"From\":[{\"Name\":\"order\",\"Entity\":\"Order\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"order\"}},\"Property\":\"Order Value\"},\"Name\":\"Order.Order Value\"}]},\"Binding\":{\"Primary\":{\"Groupings\":[{\"Projections\":[0]}]},\"Version\":1},\"ExecutionMetricsKind\":1}}]}"
+        },
+        {
+          "x": 400,
+          "y": 0,
+          "z": 1,
+          "width": 380,
+          "height": 200,
+          "config": "{\"name\":\"card1\",\"layouts\":[{\"id\":0,\"position\":{\"x\":400,\"y\":0,\"z\":1,\"width\":380,\"height\":200}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"Order.Order Count\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"order\",\"Entity\":\"Order\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"order\"}},\"Property\":\"Order Count\"},\"Name\":\"Order.Order Count\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "query": "{\"Commands\":[{\"SemanticQueryDataShapeCommand\":{\"Query\":{\"Version\":2,\"From\":[{\"Name\":\"order\",\"Entity\":\"Order\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"order\"}},\"Property\":\"Order Count\"},\"Name\":\"Order.Order Count\"}]},\"Binding\":{\"Primary\":{\"Groupings\":[{\"Projections\":[0]}]},\"Version\":1},\"ExecutionMetricsKind\":1}}]}"
+        },
+        {
+          "x": 800,
+          "y": 0,
+          "z": 2,
+          "width": 380,
+          "height": 200,
+          "config": "{\"name\":\"card2\",\"layouts\":[{\"id\":0,\"position\":{\"x\":800,\"y\":0,\"z\":2,\"width\":380,\"height\":200}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"Order.Unpicked Lines\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"order\",\"Entity\":\"Order\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"order\"}},\"Property\":\"Unpicked Lines\"},\"Name\":\"Order.Unpicked Lines\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "query": "{\"Commands\":[{\"SemanticQueryDataShapeCommand\":{\"Query\":{\"Version\":2,\"From\":[{\"Name\":\"order\",\"Entity\":\"Order\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"order\"}},\"Property\":\"Unpicked Lines\"},\"Name\":\"Order.Unpicked Lines\"}]},\"Binding\":{\"Primary\":{\"Groupings\":[{\"Projections\":[0]}]},\"Version\":1},\"ExecutionMetricsKind\":1}}]}"
+        }
+      ],
+      "filters": "[]",
+      "config": "{}"
+    }
+  ]
+}

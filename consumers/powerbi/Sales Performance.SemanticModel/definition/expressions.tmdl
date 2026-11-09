@@ -1,0 +1,3 @@
+expression Server = "wwi-dw.corp.local" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+
+expression Database = "WideWorldImportersDW" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]

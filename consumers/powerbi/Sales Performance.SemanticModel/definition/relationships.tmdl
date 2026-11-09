@@ -1,0 +1,15 @@
+relationship sale_0
+	fromColumn: 'Sale'.'Invoice Date Key'
+	toColumn: 'Date'.'Date'
+
+relationship sale_1
+	fromColumn: 'Sale'.'Customer Key'
+	toColumn: 'Customer'.'Customer Key'
+
+relationship sale_2
+	fromColumn: 'Sale'.'City Key'
+	toColumn: 'City'.'City Key'
+
+relationship sale_3
+	fromColumn: 'Sale'.'Stock Item Key'
+	toColumn: 'Stock Item'.'Stock Item Key'

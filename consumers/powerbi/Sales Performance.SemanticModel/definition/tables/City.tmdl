@@ -1,0 +1,26 @@
+table 'City'
+
+	column 'City Key'
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: City Key
+
+	column 'City'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: City
+
+	column 'Sales Territory'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Sales Territory
+
+	partition 'City' = m
+		mode: import
+		source =
+			let
+				Source = Sql.Database(Server, Database),
+				Data = Source{[Schema="Dimension", Item="City"]}[Data],
+				Selected = Table.SelectColumns(Data, {"City Key", "City", "Sales Territory"})
+			in
+				Selected

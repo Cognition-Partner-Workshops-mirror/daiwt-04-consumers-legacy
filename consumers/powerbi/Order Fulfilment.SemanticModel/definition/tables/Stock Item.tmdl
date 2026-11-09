@@ -1,0 +1,21 @@
+table 'Stock Item'
+
+	column 'Stock Item Key'
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: Stock Item Key
+
+	column 'Stock Item'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Stock Item
+
+	partition 'Stock Item' = m
+		mode: import
+		source =
+			let
+				Source = Sql.Database(Server, Database),
+				Data = Source{[Schema="Dimension", Item="Stock Item"]}[Data],
+				Selected = Table.SelectColumns(Data, {"Stock Item Key", "Stock Item"})
+			in
+				Selected

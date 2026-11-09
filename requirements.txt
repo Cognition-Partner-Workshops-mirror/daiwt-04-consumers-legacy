@@ -1,0 +1,7 @@
+-r consumers/api/requirements.txt
+pandas==2.3.3
+pytest==9.2.0
+httpx==0.28.1
+PyYAML==6.0.3
+boto3==1.43.126
+tableaudocumentapi==0.11

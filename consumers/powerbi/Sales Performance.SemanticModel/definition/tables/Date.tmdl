@@ -1,0 +1,28 @@
+table 'Date'
+	dataCategory: Time
+
+	column 'Date'
+		isKey
+		dataType: dateTime
+		summarizeBy: none
+		sourceColumn: Date
+
+	column 'Calendar Year'
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: Calendar Year
+
+	column 'Calendar Month Number'
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: Calendar Month Number
+
+	partition 'Date' = m
+		mode: import
+		source =
+			let
+				Source = Sql.Database(Server, Database),
+				Data = Source{[Schema="Dimension", Item="Date"]}[Data],
+				Selected = Table.SelectColumns(Data, {"Date", "Calendar Year", "Calendar Month Number"})
+			in
+				Selected

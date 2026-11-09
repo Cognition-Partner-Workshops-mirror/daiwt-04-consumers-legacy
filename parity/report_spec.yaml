@@ -1,0 +1,643 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "measure_total_sales_excl_tax",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.SemanticModel/definition/tables/Sale.tmdl",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT SUM([Total Excluding Tax]) AS value FROM Fact.[Sale]",
+      "grain": "one scalar; unfiltered report context",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Total Sales Excl Tax"
+    },
+    {
+      "id": "visual_total_sales_excl_tax",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.Report/report.json",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT SUM([Total Excluding Tax]) AS value FROM Fact.[Sale]",
+      "grain": "one scalar; unfiltered report context",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Total Sales Excl Tax",
+      "visual_id": "card0"
+    },
+    {
+      "id": "measure_total_profit",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.SemanticModel/definition/tables/Sale.tmdl",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT SUM([Profit]) AS value FROM Fact.[Sale]",
+      "grain": "one scalar; unfiltered report context",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Total Profit"
+    },
+    {
+      "id": "visual_total_profit",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.Report/report.json",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT SUM([Profit]) AS value FROM Fact.[Sale]",
+      "grain": "one scalar; unfiltered report context",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Total Profit",
+      "visual_id": "card1"
+    },
+    {
+      "id": "measure_profit_margin",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.SemanticModel/definition/tables/Sale.tmdl",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT SUM([Profit])/NULLIF(SUM([Total Excluding Tax]),0) AS value FROM Fact.[Sale]",
+      "grain": "one scalar; unfiltered report context",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Profit Margin %"
+    },
+    {
+      "id": "visual_profit_margin",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.Report/report.json",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT SUM([Profit])/NULLIF(SUM([Total Excluding Tax]),0) AS value FROM Fact.[Sale]",
+      "grain": "one scalar; unfiltered report context",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Profit Margin %",
+      "visual_id": "card2"
+    },
+    {
+      "id": "measure_sales_yoy",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.SemanticModel/definition/tables/Sale.tmdl",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT (SUM(s.[Total Excluding Tax])-p.sales)/NULLIF(p.sales,0) AS value FROM Fact.Sale s CROSS JOIN (SELECT SUM([Total Excluding Tax]) AS sales FROM Fact.Sale WHERE [Invoice Date Key] >= '20150101' AND [Invoice Date Key] < '20160101') p WHERE s.[Invoice Date Key] >= '20160101' AND s.[Invoice Date Key] < '20170101' GROUP BY p.sales",
+      "grain": "one scalar; Date[Calendar Year]=2016, comparison year=2015",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Sales YoY %"
+    },
+    {
+      "id": "visual_sales_yoy",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.Report/report.json",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT (SUM(s.[Total Excluding Tax])-p.sales)/NULLIF(p.sales,0) AS value FROM Fact.Sale s CROSS JOIN (SELECT SUM([Total Excluding Tax]) AS sales FROM Fact.Sale WHERE [Invoice Date Key] >= '20150101' AND [Invoice Date Key] < '20160101') p WHERE s.[Invoice Date Key] >= '20160101' AND s.[Invoice Date Key] < '20170101' GROUP BY p.sales",
+      "grain": "one scalar; Date[Calendar Year]=2016, comparison year=2015",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Sales YoY %",
+      "visual_id": "card3"
+    },
+    {
+      "id": "measure_avg_order_value",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.SemanticModel/definition/tables/Sale.tmdl",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT SUM([Total Excluding Tax])/NULLIF(COUNT(DISTINCT [WWI Invoice ID]),0) AS value FROM Fact.[Sale]",
+      "grain": "one scalar; unfiltered report context",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Avg Order Value"
+    },
+    {
+      "id": "visual_avg_order_value",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.Report/report.json",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT SUM([Total Excluding Tax])/NULLIF(COUNT(DISTINCT [WWI Invoice ID]),0) AS value FROM Fact.[Sale]",
+      "grain": "one scalar; unfiltered report context",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Avg Order Value",
+      "visual_id": "card4"
+    },
+    {
+      "id": "measure_distinct_customers",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.SemanticModel/definition/tables/Sale.tmdl",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT COUNT(DISTINCT [Customer Key]) AS value FROM Fact.[Sale]",
+      "grain": "one scalar; unfiltered report context",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Distinct Customers"
+    },
+    {
+      "id": "visual_distinct_customers",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.Report/report.json",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT COUNT(DISTINCT [Customer Key]) AS value FROM Fact.[Sale]",
+      "grain": "one scalar; unfiltered report context",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Distinct Customers",
+      "visual_id": "card5"
+    },
+    {
+      "id": "measure_chiller_sales",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.SemanticModel/definition/tables/Sale.tmdl",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT SUM(CASE WHEN [Total Chiller Items]>0 THEN [Total Excluding Tax] END) AS value FROM Fact.[Sale]",
+      "grain": "one scalar; unfiltered report context",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Chiller Sales"
+    },
+    {
+      "id": "visual_chiller_sales",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Sales Performance.Report/report.json",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT SUM(CASE WHEN [Total Chiller Items]>0 THEN [Total Excluding Tax] END) AS value FROM Fact.[Sale]",
+      "grain": "one scalar; unfiltered report context",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Chiller Sales",
+      "visual_id": "card6"
+    },
+    {
+      "id": "measure_order_value",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Order Fulfilment.SemanticModel/definition/tables/Order.tmdl",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT SUM([Total Excluding Tax]) AS value FROM Fact.[Order]",
+      "grain": "one scalar; unfiltered report context",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Order Value"
+    },
+    {
+      "id": "visual_order_value",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Order Fulfilment.Report/report.json",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT SUM([Total Excluding Tax]) AS value FROM Fact.[Order]",
+      "grain": "one scalar; unfiltered report context",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Order Value",
+      "visual_id": "card0"
+    },
+    {
+      "id": "measure_order_count",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Order Fulfilment.SemanticModel/definition/tables/Order.tmdl",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT COUNT(DISTINCT [WWI Order ID]) AS value FROM Fact.[Order]",
+      "grain": "one scalar; unfiltered report context",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Order Count"
+    },
+    {
+      "id": "visual_order_count",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Order Fulfilment.Report/report.json",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT COUNT(DISTINCT [WWI Order ID]) AS value FROM Fact.[Order]",
+      "grain": "one scalar; unfiltered report context",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Order Count",
+      "visual_id": "card1"
+    },
+    {
+      "id": "measure_unpicked_lines",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Order Fulfilment.SemanticModel/definition/tables/Order.tmdl",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT COUNT(CASE WHEN [Picked Date Key] IS NULL THEN 1 END) AS value FROM Fact.[Order]",
+      "grain": "one scalar; unfiltered report context",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Unpicked Lines"
+    },
+    {
+      "id": "visual_unpicked_lines",
+      "consumer": "powerbi",
+      "source_file": "consumers/powerbi/Order Fulfilment.Report/report.json",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT COUNT(CASE WHEN [Picked Date Key] IS NULL THEN 1 END) AS value FROM Fact.[Order]",
+      "grain": "one scalar; unfiltered report context",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Unpicked Lines",
+      "visual_id": "card2"
+    },
+    {
+      "id": "tableau_regional_sales",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Regional Sales.twb",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT TOP (100) c.[Sales Territory] AS territory, DATEPART(year,s.[Invoice Date Key]) AS sales_year, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory], DATEPART(year,s.[Invoice Date Key])",
+      "grain": "one row per territory, sales_year",
+      "keys": [
+        "territory",
+        "sales_year"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Regional Sales",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_regional_sales_overview",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Regional Sales.twb",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT TOP (100) c.[Sales Territory] AS territory, DATEPART(year,s.[Invoice Date Key]) AS sales_year, ISNULL(SUM(s.[Total Excluding Tax]),0) AS sales FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory], DATEPART(year,s.[Invoice Date Key])",
+      "grain": "one row per territory, sales_year",
+      "keys": [
+        "territory",
+        "sales_year"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Regional Sales Overview",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_order_pipeline",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Order Pipeline.twb",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, ISNULL(SUM([Total Excluding Tax]),0) AS order_value, COUNT_BIG(*) AS order_lines FROM Fact.[Order] GROUP BY CONVERT(char(7),[Order Date Key],120)",
+      "grain": "one row per order_month",
+      "keys": [
+        "order_month"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Order Pipeline",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_order_pipeline_overview",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Order Pipeline.twb",
+      "kind": "tile",
+      "source": "mssql",
+      "sql": "SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, ISNULL(SUM([Total Excluding Tax]),0) AS order_value, COUNT_BIG(*) AS order_lines FROM Fact.[Order] GROUP BY CONVERT(char(7),[Order Date Key],120)",
+      "grain": "one row per order_month",
+      "keys": [
+        "order_month"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Order Pipeline Overview",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_retail_channels",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Retail Channels.twb",
+      "kind": "tile",
+      "source": "redshift",
+      "sql": "SELECT sales_channel, COUNT(*) AS order_count FROM core.orders GROUP BY sales_channel",
+      "grain": "one row per sales_channel",
+      "keys": [
+        "sales_channel"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Retail Channels",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_retail_channels_overview",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Retail Channels.twb",
+      "kind": "tile",
+      "source": "redshift",
+      "sql": "SELECT sales_channel, COUNT(*) AS order_count FROM core.orders GROUP BY sales_channel",
+      "grain": "one row per sales_channel",
+      "keys": [
+        "sales_channel"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Retail Channels Overview",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "api_customer_summary",
+      "consumer": "api",
+      "source_file": "consumers/api/main.py",
+      "kind": "endpoint",
+      "source": "mssql",
+      "sql": "SELECT [Customer Key] AS customer_key, COUNT(DISTINCT [WWI Invoice ID]) AS invoices, SUM([Total Excluding Tax]) AS sales, SUM([Profit]) AS profit FROM Fact.Sale WHERE [Customer Key]=1 GROUP BY [Customer Key]",
+      "grain": "endpoint response; customer_key",
+      "keys": [
+        "customer_key"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "path": "/customers/1/summary",
+      "sample_params": {
+        "customer_key": 1
+      }
+    },
+    {
+      "id": "api_monthly",
+      "consumer": "api",
+      "source_file": "consumers/api/main.py",
+      "kind": "endpoint",
+      "source": "mssql",
+      "sql": "SELECT DATEPART(month,[Invoice Date Key]) AS month, SUM([Total Excluding Tax]) AS sales, SUM([Profit]) AS profit FROM Fact.Sale WHERE [Invoice Date Key]>='20160101' AND [Invoice Date Key]<'20170101' GROUP BY DATEPART(month,[Invoice Date Key])",
+      "grain": "endpoint response; month",
+      "keys": [
+        "month"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "path": "/kpis/monthly",
+      "sample_params": {
+        "year": 2016
+      }
+    },
+    {
+      "id": "api_territory",
+      "consumer": "api",
+      "source_file": "consumers/api/main.py",
+      "kind": "endpoint",
+      "source": "mssql",
+      "sql": "SELECT c.[Sales Territory] AS territory, SUM(s.[Total Excluding Tax]) AS sales FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] WHERE DATEPART(year,s.[Invoice Date Key])=2016 GROUP BY c.[Sales Territory]",
+      "grain": "endpoint response; territory",
+      "keys": [
+        "territory"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "path": "/sales/by-territory",
+      "sample_params": {
+        "year": 2016
+      }
+    },
+    {
+      "id": "api_top_items",
+      "consumer": "api",
+      "source_file": "consumers/api/main.py",
+      "kind": "endpoint",
+      "source": "mssql",
+      "sql": "SELECT TOP (10) s.[Stock Item Key] AS stock_item_key, i.[Stock Item] AS stock_item, SUM(s.[Total Excluding Tax]) AS sales FROM Fact.Sale s JOIN Dimension.[Stock Item] i ON s.[Stock Item Key]=i.[Stock Item Key] GROUP BY s.[Stock Item Key],i.[Stock Item] ORDER BY sales DESC,stock_item_key",
+      "grain": "endpoint response; stock_item_key",
+      "keys": [
+        "stock_item_key"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "path": "/stock-items/top",
+      "sample_params": {
+        "limit": 10
+      }
+    },
+    {
+      "id": "api_health",
+      "consumer": "api",
+      "source_file": "consumers/api/main.py",
+      "kind": "endpoint",
+      "source": "mssql",
+      "sql": "SELECT 1 AS available",
+      "grain": "endpoint response; single status",
+      "keys": [],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "path": "/health",
+      "sample_params": {}
+    },
+    {
+      "id": "notebook_monthly_sales",
+      "consumer": "notebooks",
+      "source_file": "consumers/notebooks/monthly_sales.ipynb",
+      "kind": "notebook",
+      "source": "mssql",
+      "sql": "SELECT DATEPART(year,[Invoice Date Key]) AS sales_year, DATEPART(month,[Invoice Date Key]) AS sales_month, SUM([Total Excluding Tax]) AS sales, SUM([Profit]) AS profit FROM Fact.Sale GROUP BY DATEPART(year,[Invoice Date Key]), DATEPART(month,[Invoice Date Key]) ORDER BY sales_year, sales_month",
+      "grain": "calendar year and month",
+      "keys": [
+        "sales_year",
+        "sales_month"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      }
+    },
+    {
+      "id": "finance_monthly_sales",
+      "consumer": "notebooks",
+      "source_file": "consumers/notebooks/finance_review.sql",
+      "kind": "notebook",
+      "source": "mssql",
+      "sql": "SELECT DATEPART(year,[Invoice Date Key]) AS sales_year, DATEPART(month,[Invoice Date Key]) AS sales_month, SUM([Total Excluding Tax]) AS sales, SUM([Profit]) AS profit FROM Fact.Sale GROUP BY DATEPART(year,[Invoice Date Key]), DATEPART(month,[Invoice Date Key]) ORDER BY sales_year, sales_month",
+      "grain": "calendar year and month",
+      "keys": [
+        "sales_year",
+        "sales_month"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      }
+    },
+    {
+      "id": "finance_customer_profit",
+      "consumer": "notebooks",
+      "source_file": "consumers/notebooks/finance_review.sql",
+      "kind": "notebook",
+      "source": "mssql",
+      "sql": "SELECT TOP (20) [Customer Key], SUM([Profit]) AS profit FROM Fact.Sale GROUP BY [Customer Key] ORDER BY profit DESC, [Customer Key]",
+      "grain": "top 20 customers by profit",
+      "keys": [
+        "Customer Key"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      }
+    },
+    {
+      "id": "tableau_regional_sales_target",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Regional Sales.twb",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT c.[Sales Territory] AS territory, SUM(s.[Total Excluding Tax])/100000.0 AS value_vs_target FROM Fact.Sale s JOIN Dimension.City c ON s.[City Key]=c.[City Key] GROUP BY c.[Sales Territory]",
+      "grain": "worksheet mark by territory",
+      "keys": [
+        "territory"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Value vs Target",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_order_pipeline_target",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Order Pipeline.twb",
+      "kind": "measure",
+      "source": "mssql",
+      "sql": "SELECT CONVERT(char(7),[Order Date Key],120) AS order_month, SUM([Total Excluding Tax])/100000.0 AS value_vs_target FROM Fact.[Order] GROUP BY CONVERT(char(7),[Order Date Key],120)",
+      "grain": "worksheet mark by order_month",
+      "keys": [
+        "order_month"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Value vs Target",
+      "parameters": {
+        "Target Value": 100000
+      }
+    },
+    {
+      "id": "tableau_retail_channels_target",
+      "consumer": "tableau",
+      "source_file": "consumers/tableau/Retail Channels.twb",
+      "kind": "measure",
+      "source": "redshift",
+      "sql": "SELECT sales_channel, COUNT(*)/100000.0 AS value_vs_target FROM core.orders GROUP BY sales_channel",
+      "grain": "worksheet mark by sales_channel",
+      "keys": [
+        "sales_channel"
+      ],
+      "numeric_tolerance": {
+        "absolute": 0.01,
+        "relative": 0.000001
+      },
+      "name": "Value vs Target",
+      "parameters": {
+        "Target Value": 100000
+      }
+    }
+  ]
+}

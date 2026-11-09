@@ -1,0 +1,88 @@
+{
+  "version": "5.55",
+  "config": "{}",
+  "layoutOptimization": 0,
+  "sections": [
+    {
+      "name": "Overview",
+      "displayName": "Sales Performance",
+      "displayOption": 1,
+      "width": 1280,
+      "height": 720,
+      "visualContainers": [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "width": 380,
+          "height": 200,
+          "config": "{\"name\":\"card0\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":0,\"width\":380,\"height\":200}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"Sale.Total Sales Excl Tax\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"sale\",\"Entity\":\"Sale\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"sale\"}},\"Property\":\"Total Sales Excl Tax\"},\"Name\":\"Sale.Total Sales Excl Tax\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "query": "{\"Commands\":[{\"SemanticQueryDataShapeCommand\":{\"Query\":{\"Version\":2,\"From\":[{\"Name\":\"sale\",\"Entity\":\"Sale\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"sale\"}},\"Property\":\"Total Sales Excl Tax\"},\"Name\":\"Sale.Total Sales Excl Tax\"}]},\"Binding\":{\"Primary\":{\"Groupings\":[{\"Projections\":[0]}]},\"Version\":1},\"ExecutionMetricsKind\":1}}]}"
+        },
+        {
+          "x": 400,
+          "y": 0,
+          "z": 1,
+          "width": 380,
+          "height": 200,
+          "config": "{\"name\":\"card1\",\"layouts\":[{\"id\":0,\"position\":{\"x\":400,\"y\":0,\"z\":1,\"width\":380,\"height\":200}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"Sale.Total Profit\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"sale\",\"Entity\":\"Sale\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"sale\"}},\"Property\":\"Total Profit\"},\"Name\":\"Sale.Total Profit\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "query": "{\"Commands\":[{\"SemanticQueryDataShapeCommand\":{\"Query\":{\"Version\":2,\"From\":[{\"Name\":\"sale\",\"Entity\":\"Sale\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"sale\"}},\"Property\":\"Total Profit\"},\"Name\":\"Sale.Total Profit\"}]},\"Binding\":{\"Primary\":{\"Groupings\":[{\"Projections\":[0]}]},\"Version\":1},\"ExecutionMetricsKind\":1}}]}"
+        },
+        {
+          "x": 800,
+          "y": 0,
+          "z": 2,
+          "width": 380,
+          "height": 200,
+          "config": "{\"name\":\"card2\",\"layouts\":[{\"id\":0,\"position\":{\"x\":800,\"y\":0,\"z\":2,\"width\":380,\"height\":200}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"Sale.Profit Margin %\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"sale\",\"Entity\":\"Sale\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"sale\"}},\"Property\":\"Profit Margin %\"},\"Name\":\"Sale.Profit Margin %\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "query": "{\"Commands\":[{\"SemanticQueryDataShapeCommand\":{\"Query\":{\"Version\":2,\"From\":[{\"Name\":\"sale\",\"Entity\":\"Sale\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"sale\"}},\"Property\":\"Profit Margin %\"},\"Name\":\"Sale.Profit Margin %\"}]},\"Binding\":{\"Primary\":{\"Groupings\":[{\"Projections\":[0]}]},\"Version\":1},\"ExecutionMetricsKind\":1}}]}"
+        },
+        {
+          "x": 0,
+          "y": 220,
+          "z": 3,
+          "width": 380,
+          "height": 200,
+          "config": "{\"name\":\"card3\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":220,\"z\":3,\"width\":380,\"height\":200}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"Sale.Sales YoY %\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"sale\",\"Entity\":\"Sale\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"sale\"}},\"Property\":\"Sales YoY %\"},\"Name\":\"Sale.Sales YoY %\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[{\"name\":\"YearContext\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Date\"}},\"Property\":\"Calendar Year\"}},\"type\":\"Categorical\",\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"Date\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Calendar Year\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"2016L\"}}]]}}}]}}]",
+          "query": "{\"Commands\":[{\"SemanticQueryDataShapeCommand\":{\"Query\":{\"Version\":2,\"From\":[{\"Name\":\"sale\",\"Entity\":\"Sale\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"sale\"}},\"Property\":\"Sales YoY %\"},\"Name\":\"Sale.Sales YoY %\"}]},\"Binding\":{\"Primary\":{\"Groupings\":[{\"Projections\":[0]}]},\"Version\":1},\"ExecutionMetricsKind\":1}}]}"
+        },
+        {
+          "x": 400,
+          "y": 220,
+          "z": 4,
+          "width": 380,
+          "height": 200,
+          "config": "{\"name\":\"card4\",\"layouts\":[{\"id\":0,\"position\":{\"x\":400,\"y\":220,\"z\":4,\"width\":380,\"height\":200}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"Sale.Avg Order Value\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"sale\",\"Entity\":\"Sale\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"sale\"}},\"Property\":\"Avg Order Value\"},\"Name\":\"Sale.Avg Order Value\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "query": "{\"Commands\":[{\"SemanticQueryDataShapeCommand\":{\"Query\":{\"Version\":2,\"From\":[{\"Name\":\"sale\",\"Entity\":\"Sale\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"sale\"}},\"Property\":\"Avg Order Value\"},\"Name\":\"Sale.Avg Order Value\"}]},\"Binding\":{\"Primary\":{\"Groupings\":[{\"Projections\":[0]}]},\"Version\":1},\"ExecutionMetricsKind\":1}}]}"
+        },
+        {
+          "x": 800,
+          "y": 220,
+          "z": 5,
+          "width": 380,
+          "height": 200,
+          "config": "{\"name\":\"card5\",\"layouts\":[{\"id\":0,\"position\":{\"x\":800,\"y\":220,\"z\":5,\"width\":380,\"height\":200}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"Sale.Distinct Customers\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"sale\",\"Entity\":\"Sale\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"sale\"}},\"Property\":\"Distinct Customers\"},\"Name\":\"Sale.Distinct Customers\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "query": "{\"Commands\":[{\"SemanticQueryDataShapeCommand\":{\"Query\":{\"Version\":2,\"From\":[{\"Name\":\"sale\",\"Entity\":\"Sale\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"sale\"}},\"Property\":\"Distinct Customers\"},\"Name\":\"Sale.Distinct Customers\"}]},\"Binding\":{\"Primary\":{\"Groupings\":[{\"Projections\":[0]}]},\"Version\":1},\"ExecutionMetricsKind\":1}}]}"
+        },
+        {
+          "x": 0,
+          "y": 440,
+          "z": 6,
+          "width": 380,
+          "height": 200,
+          "config": "{\"name\":\"card6\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":440,\"z\":6,\"width\":380,\"height\":200}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"Sale.Chiller Sales\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"sale\",\"Entity\":\"Sale\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"sale\"}},\"Property\":\"Chiller Sales\"},\"Name\":\"Sale.Chiller Sales\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "query": "{\"Commands\":[{\"SemanticQueryDataShapeCommand\":{\"Query\":{\"Version\":2,\"From\":[{\"Name\":\"sale\",\"Entity\":\"Sale\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"sale\"}},\"Property\":\"Chiller Sales\"},\"Name\":\"Sale.Chiller Sales\"}]},\"Binding\":{\"Primary\":{\"Groupings\":[{\"Projections\":[0]}]},\"Version\":1},\"ExecutionMetricsKind\":1}}]}"
+        }
+      ],
+      "filters": "[]",
+      "config": "{}"
+    }
+  ]
+}
