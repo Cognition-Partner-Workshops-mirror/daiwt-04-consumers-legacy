@@ -1,0 +1,62 @@
+{
+  "captured_at": "2026-11-09T15:40:31.278609+00:00",
+  "source_filter": "redshift",
+  "entries": [
+    {
+      "id": "tableau_retail_channels",
+      "source": "redshift",
+      "row_count": 4,
+      "captured_at": "2026-11-09T15:40:31.278609+00:00",
+      "sha256": "2ae3da6ddd483e0438b55bca1062f5d7e0870f596b16880692949acbaf2fbbdf",
+      "file": "tableau_retail_channels.csv"
+    },
+    {
+      "id": "tableau_retail_monthly_trend",
+      "source": "redshift",
+      "row_count": 12,
+      "captured_at": "2026-11-09T15:40:31.278609+00:00",
+      "sha256": "adf80eb56dcf9173215a63397daed0940292c25889e8b94bbe03b66898aedabd",
+      "file": "tableau_retail_monthly_trend.csv"
+    },
+    {
+      "id": "tableau_channel_target_coverage",
+      "source": "redshift",
+      "row_count": 4,
+      "captured_at": "2026-11-09T15:40:31.278609+00:00",
+      "sha256": "6a740c04a84756587673847fe8a0da60db81a4af00f5a5815747ac350b688e3f",
+      "file": "tableau_channel_target_coverage.csv"
+    },
+    {
+      "id": "tableau_retail_channels_overview",
+      "source": "redshift",
+      "row_count": 20,
+      "captured_at": "2026-11-09T15:40:31.278609+00:00",
+      "sha256": "3910f413731d63d78b153ee7b65b7450c921275137cd6b946831d18b868a0548",
+      "file": "tableau_retail_channels_overview.csv"
+    },
+    {
+      "id": "tableau_retail_channels_value_vs_target",
+      "source": "redshift",
+      "row_count": 4,
+      "captured_at": "2026-11-09T15:40:31.278609+00:00",
+      "sha256": "6a740c04a84756587673847fe8a0da60db81a4af00f5a5815747ac350b688e3f",
+      "file": "tableau_retail_channels_value_vs_target.csv"
+    },
+    {
+      "id": "tableau_retail_channels_above_target",
+      "source": "redshift",
+      "row_count": 4,
+      "captured_at": "2026-11-09T15:40:31.278609+00:00",
+      "sha256": "6509e8c4b3a2f7863aae34c1b8776aa36c69a46196314844de91a6ae46ff7f83",
+      "file": "tableau_retail_channels_above_target.csv"
+    },
+    {
+      "id": "tableau_retail_channels_share_of_total",
+      "source": "redshift",
+      "row_count": 4,
+      "captured_at": "2026-11-09T15:40:31.278609+00:00",
+      "sha256": "0e9a2ed0e6710938bb5c55a99d9b7e429025e5e7258dac7aa966a0ad7449a678",
+      "file": "tableau_retail_channels_share_of_total.csv"
+    }
+  ]
+}

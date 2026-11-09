@@ -77,11 +77,15 @@ def csv_bytes(rows, keys):
     return output.getvalue().encode('utf-8')
 
 
-def capture(spec, destination):
+def capture(spec, destination, source='all'):
+    if source not in ('all', 'mssql', 'redshift'):
+        raise ValueError('Unknown baseline source')
     destination.mkdir(parents=True, exist_ok=True)
-    manifest = {'captured_at': datetime.now(timezone.utc).isoformat(), 'entries': []}
+    manifest = {'captured_at': datetime.now(timezone.utc).isoformat(), 'source_filter': source, 'entries': []}
     with TestClient(app) as api:
         for item in spec['entries']:
+            if source != 'all' and item['source'] != source:
+                continue
             if not re.fullmatch(r'[a-z0-9_]+', item['id']):
                 raise ValueError('Invalid report identifier')
             sql = item['sql'].strip()
@@ -115,6 +119,8 @@ def capture(spec, destination):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--spec', type=Path, default=ROOT / 'parity/report_spec.yaml')
+    parser.add_argument('--source', choices=('redshift', 'mssql', 'all'), default='all',
+                        help='Capture only this source (default: all)')
     args = parser.parse_args()
-    result = capture(yaml.safe_load(args.spec.read_text()), ROOT / 'parity/baseline')
+    result = capture(yaml.safe_load(args.spec.read_text()), ROOT / 'parity/baseline', source=args.source)
     print(f"Captured {len(result['entries'])} report entries")

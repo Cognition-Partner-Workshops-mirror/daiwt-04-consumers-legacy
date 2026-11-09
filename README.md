@@ -104,6 +104,12 @@ manifest contains row counts, source names, SHA-256 hashes and UTC capture
 times. Capture stops on a failed source or endpoint; do not treat a partial run
 as a complete baseline.
 
+To capture a single source, run `.venv/bin/python parity/run_baseline.py --source
+redshift` or use `--source mssql`. The default is `--source all`. Each run writes
+a manifest for the selected source only; existing files for other sources are
+left untouched. Capture timestamps change each run; data-file hashes can be
+compared to check repeatability.
+
 `make reset` (or `bash scripts/reset.sh`) restores tracked consumers and the
 report spec from HEAD, removes prior capture files, and captures fresh baseline
 files. This discards local tracked consumer/spec edits and requires working

@@ -38,6 +38,39 @@ def test_endpoint_capture(monkeypatch, tmp_path):
     assert result['entries'][0]['response_file'] == 'sample.json'
 
 
+@pytest.mark.parametrize('source,expected', [('all', ['sql_entry', 'retail_entry']),
+                                           ('mssql', ['sql_entry']), ('redshift', ['retail_entry'])])
+def test_source_filter(monkeypatch, tmp_path, source, expected):
+    mixed = {'entries': [dict(spec()['entries'][0], id='sql_entry'),
+                         dict(spec(source='redshift')['entries'][0], id='retail_entry')]}
+    calls = []
+    def fetch(name):
+        calls.append(name)
+        return [{'value': 1}]
+    monkeypatch.setattr(baseline.db, 'fetch', lambda sql: fetch('sql_entry'))
+    monkeypatch.setattr(baseline, 'redshift_rows', lambda sql: fetch('retail_entry'))
+    result = baseline.capture(mixed, tmp_path, source=source)
+    assert calls == expected
+    assert [entry['id'] for entry in result['entries']] == expected
+    assert result['source_filter'] == source
+    assert sorted(p.stem for p in tmp_path.glob('*.csv')) == sorted(expected)
+
+
+def test_source_filter_empty(monkeypatch, tmp_path):
+    def unexpected(sql):
+        pytest.fail('Excluded source was queried')
+    monkeypatch.setattr(baseline.db, 'fetch', unexpected)
+    result = baseline.capture(spec(), tmp_path, source='redshift')
+    assert result['entries'] == []
+    assert not list(tmp_path.glob('*.csv'))
+
+
+def test_source_filter_invalid(tmp_path):
+    with pytest.raises(ValueError, match='Unknown baseline source'):
+        baseline.capture(spec(), tmp_path, source='other')
+    assert not (tmp_path / 'manifest.json').exists()
+
+
 def test_source_error(monkeypatch, tmp_path):
     def unavailable(sql):
         raise RuntimeError('unavailable')
